@@ -1,0 +1,30 @@
+﻿Build started 10/2/2011 8:19:42 PM.
+Project "C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\demo_quiz2_vc8.vcxproj" on node 2 (build target(s)).
+InitializeBuildStatus:
+  Creating "..\tmp\ballistic\Debug\demo_ballistic.unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\tmp\ballistic\Debug\\" /Fd"..\tmp\ballistic\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\demos\ballistic\ballistic.cpp ..\src\demos\app.cpp ..\src\demos\timing.cpp
+  timing.cpp
+  app.cpp
+  ballistic.cpp
+  Generating Code...
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\tmp\ballistic\Debug\main1.obj" /Fd"..\tmp\ballistic\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\demos\main.cpp
+  main.cpp
+Link:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\demo_ballistic.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../lib cyclone_d.lib opengl32.lib glu32.lib glut32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"..\tmp\ballistic\Debug\demo_ballistic.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"..\tmp\ballistic\Debug/ballistic.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\demo_ballistic.lib" /MACHINE:X86 ..\tmp\ballistic\Debug\ballistic.obj
+  ..\tmp\ballistic\Debug\app.obj
+  ..\tmp\ballistic\Debug\timing.obj
+  ..\tmp\ballistic\Debug\main1.obj
+  "C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\lib\cyclone_d.lib"
+cyclone_d.lib(particle.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+  demo_quiz2_vc8.vcxproj -> C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\..\bin\demo_ballistic.exe
+Manifest:
+  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"..\bin\demo_ballistic.exe;#1" /manifest ..\tmp\ballistic\Debug\demo_ballistic.exe.intermediate.manifest
+FinalizeBuildStatus:
+  Deleting file "..\tmp\ballistic\Debug\demo_ballistic.unsuccessfulbuild".
+  Touching "..\tmp\ballistic\Debug\demo_ballistic.lastbuildstate".
+Done Building Project "C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\demo_quiz2_vc8.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:18.62

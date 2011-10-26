@@ -1,0 +1,47 @@
+﻿Build started 10/2/2011 8:18:39 PM.
+Project "C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\cyclone_vc8.vcxproj" on node 2 (build target(s)).
+InitializeBuildStatus:
+  Creating ".\tmp\Debug\cyclone.unsuccessfulbuild" because "AlwaysCreate" was specified.
+ClCompile:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm- /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo".\tmp\Debug/" /Fd".\tmp\Debug/vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\body.cpp ..\src\collide_coarse.cpp ..\src\collide_fine.cpp ..\src\contacts.cpp ..\src\core.cpp ..\src\fgen.cpp ..\src\joints.cpp ..\src\particle.cpp ..\src\pcontacts.cpp ..\src\pfgen.cpp ..\src\plinks.cpp ..\src\pworld.cpp ..\src\random.cpp ..\src\world.cpp
+  body.cpp
+  collide_coarse.cpp
+  collide_fine.cpp
+  contacts.cpp
+  core.cpp
+  fgen.cpp
+  joints.cpp
+  particle.cpp
+  pcontacts.cpp
+  pfgen.cpp
+  plinks.cpp
+  pworld.cpp
+  random.cpp
+  world.cpp
+  Generating Code...
+C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1151,5): warning MSB8012: TargetPath(C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\.\..\lib\cyclone.lib) does not match the Library's OutputFile property value (C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\lib\cyclone_d.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(1153,5): warning MSB8012: TargetName(cyclone) does not match the Library's OutputFile property value (cyclone_d). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+Lib:
+  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"..\lib\cyclone_d.lib" /NOLOGO .\tmp\Debug/body.obj
+  .\tmp\Debug/collide_coarse.obj
+  .\tmp\Debug/collide_fine.obj
+  .\tmp\Debug/contacts.obj
+  .\tmp\Debug/core.obj
+  .\tmp\Debug/fgen.obj
+  .\tmp\Debug/joints.obj
+  .\tmp\Debug/particle.obj
+  .\tmp\Debug/pcontacts.obj
+  .\tmp\Debug/pfgen.obj
+  .\tmp\Debug/plinks.obj
+  .\tmp\Debug/pworld.obj
+  .\tmp\Debug/random.obj
+  .\tmp\Debug/world.obj
+  cyclone_vc8.vcxproj -> C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\.\..\lib\cyclone.lib
+FinalizeBuildStatus:
+  Deleting file ".\tmp\Debug\cyclone.unsuccessfulbuild".
+  Touching ".\tmp\Debug\cyclone.lastbuildstate".
+Done Building Project "C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\cyclone_vc8.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:11.76
