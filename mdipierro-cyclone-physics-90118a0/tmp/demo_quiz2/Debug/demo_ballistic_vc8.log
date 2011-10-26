@@ -1,28 +1,32 @@
-﻿Build started 10/3/2011 1:02:33 AM.
-Project "C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\demo_ballistic_vc8.vcxproj" on node 2 (build target(s)).
-InitializeBuildStatus:
-  Creating "..\tmp\demo_quiz2\Debug\demo_quiz2.unsuccessfulbuild" because "AlwaysCreate" was specified.
-ClCompile:
-  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\tmp\demo_quiz2\Debug\\" /Fd"..\tmp\demo_quiz2\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\demos\quiz2\quiz2.cpp
-  quiz2.cpp
-  All outputs are up-to-date.
-Link:
-  C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\demo_quiz2.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../lib cyclone_d.lib opengl32.lib glu32.lib glut32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"..\tmp\demo_quiz2\Debug\demo_quiz2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"..\tmp\demo_quiz2\Debug/demo_quiz2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\demo_quiz2.lib" /MACHINE:X86 ..\tmp\demo_quiz2\Debug\app.obj
-  ..\tmp\demo_quiz2\Debug\quiz2.obj
-  ..\tmp\demo_quiz2\Debug\timing.obj
-  ..\tmp\demo_quiz2\Debug\main1.obj
-  "C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\lib\cyclone_d.lib"
-cyclone_d.lib(pworld.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
-  demo_ballistic_vc8.vcxproj -> C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\..\bin\demo_quiz2.exe
-Manifest:
-  C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"..\bin\demo_quiz2.exe;#1" /manifest ..\tmp\demo_quiz2\Debug\demo_quiz2.exe.intermediate.manifest
-CopyFilesToOutputDirectory:
-  Copying file from "..\tmp\demo_quiz2\Debug\demo_quiz2.pdb" to "..\bin\demo_quiz2.pdb".
-FinalizeBuildStatus:
-  Deleting file "..\tmp\demo_quiz2\Debug\demo_quiz2.unsuccessfulbuild".
-  Touching "..\tmp\demo_quiz2\Debug\demo_quiz2.lastbuildstate".
-Done Building Project "C:\Documents and Settings\Candace\Desktop\PHYSICS\mdipierro-cyclone-physics-90118a0\build\demo_ballistic_vc8.vcxproj" (build target(s)).
+﻿Build started 10/26/2011 4:27:41 PM.
+     1>Project "C:\Users\dhearn\Desktop\Icemelt\mdipierro-cyclone-physics-90118a0\build\demo_ballistic_vc8.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "..\tmp\demo_quiz2\Debug\demo_quiz2.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\tmp\demo_quiz2\Debug\\" /Fd"..\tmp\demo_quiz2\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\demos\app.cpp ..\src\demos\quiz2\quiz2.cpp ..\src\demos\timing.cpp
+         timing.cpp
+         quiz2.cpp
+         app.cpp
+         Generating Code...
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\include /Zi /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\tmp\demo_quiz2\Debug\main1.obj" /Fd"..\tmp\demo_quiz2\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\demos\main.cpp
+         main.cpp
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\bin\demo_quiz2.exe" /INCREMENTAL:NO /NOLOGO /LIBPATH:../lib cyclone_d.lib opengl32.lib glu32.lib glut32.lib winmm.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"..\tmp\demo_quiz2\Debug\demo_quiz2.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"..\tmp\demo_quiz2\Debug/demo_quiz2.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"..\bin\demo_quiz2.lib" /MACHINE:X86 ..\tmp\demo_quiz2\Debug\app.obj
+         ..\tmp\demo_quiz2\Debug\quiz2.obj
+         ..\tmp\demo_quiz2\Debug\timing.obj
+         ..\tmp\demo_quiz2\Debug\main1.obj
+         "C:\Users\dhearn\Desktop\Icemelt\mdipierro-cyclone-physics-90118a0\lib\cyclone_d.lib"
+     1>cyclone_d.lib(pworld.obj) : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
+         demo_ballistic_vc8.vcxproj -> C:\Users\dhearn\Desktop\Icemelt\mdipierro-cyclone-physics-90118a0\build\..\bin\demo_quiz2.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"..\bin\demo_quiz2.exe;#1" /manifest ..\tmp\demo_quiz2\Debug\demo_quiz2.exe.intermediate.manifest
+       CopyFilesToOutputDirectory:
+         Copying file from "..\tmp\demo_quiz2\Debug\demo_quiz2.pdb" to "..\bin\demo_quiz2.pdb".
+       FinalizeBuildStatus:
+         Deleting file "..\tmp\demo_quiz2\Debug\demo_quiz2.unsuccessfulbuild".
+         Touching "..\tmp\demo_quiz2\Debug\demo_quiz2.lastbuildstate".
+     1>Done Building Project "C:\Users\dhearn\Desktop\Icemelt\mdipierro-cyclone-physics-90118a0\build\demo_ballistic_vc8.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:04.40
+Time Elapsed 00:00:05.11

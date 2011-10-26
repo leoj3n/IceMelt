@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>demo_quiz2</ProjectName>
+    <ProjectName>IceMelt</ProjectName>
     <ProjectGuid>{8E2C0A8C-A817-4919-AEA0-565B97423BED}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
