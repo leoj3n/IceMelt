@@ -1,3 +1,4 @@
+# this file lists what files/dirs should be excluded from the repository
 bin/** /*
 tmp/** /*
 build/Debug/** /*
