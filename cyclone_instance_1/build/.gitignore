@@ -1,1 +1,5 @@
-find . -type d
+# add to this if necessary
+_UpgradeReport_Files/**/*
+ipch/**/*
+Debug/**/*
+tmp/**/*
