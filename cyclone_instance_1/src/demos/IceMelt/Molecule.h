@@ -1,9 +1,14 @@
-/* Molecule header file. 
+/* Molecule header file. */
+#include "../../../include/cyclone/particle.h";
 
-class Molecule {
+class Molecule : public cyclone::Particle
+{
 public:
-	double temp; // what temperature is the molecule
+	cyclone::real temp; // what temperature is the molecule
+	unsigned state;
+
+	bool update( cyclone::real duration );
 
 private:
 
-};*/
+};

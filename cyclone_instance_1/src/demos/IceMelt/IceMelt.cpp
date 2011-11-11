@@ -22,7 +22,7 @@
 #include "../app.h"
 #include "../timing.h"
 
-//#include "Molecule.h" // molecule header file
+#include "Molecule.h" // molecule header file
 //#include "Surface.h" // surface header file
 
 class IceMelt : public MassAggregateApplication
@@ -31,10 +31,7 @@ class IceMelt : public MassAggregateApplication
 	cyclone::Particle *molecules; // keep track of all molecules
 	cyclone::GroundContacts groundContactGenerator;
 
-	//[del]cyclone::ParticleForceRegistry registry;
-
-	// create molecule ... will add to particle registry
-	//void createMolecule();
+	//[delete me?] cyclone::ParticleForceRegistry registry;
 
 	// draws sphere
 	void drawSphere( cyclone::Particle p );
@@ -56,7 +53,10 @@ public:
 // method definitions:
 
 // CONSTRUCTOR
-IceMelt::IceMelt() : MassAggregateApplication( 2 ) {
+IceMelt::IceMelt()
+:
+MassAggregateApplication( 2 ),
+world( 20 ) {
 	particleArray[0].setPosition( 0, 0, 1 );
     particleArray[1].setPosition( 0, 0, -1 );
 	
@@ -83,7 +83,7 @@ void IceMelt::update() {
 	if (duration <= 0.0f) return;
 
 	// Run the simulation
-    world.runPhysics(duration);
+    world.runPhysics( duration );
 
 	/*registry.updateForces( duration );
 	particle1.integrate( duration );
@@ -100,15 +100,10 @@ void IceMelt::display() {
     gluLookAt( 0.0, 0.0, 10.0,  0.0, 0.0, 0.0,  0.0, 1.0, 0.0 );
 
 	glColor3f( 0, 0, 1.0f );
-	drawSphere( particle1 );
+	drawSphere( particleArray[0] );
 
 	glColor3f( 1.0f, 0, 0 );
-	drawSphere( particle2 );
-}
-
-// create molecule function
-void IceMelt::createMolecule() {
-
+	drawSphere( particleArray[1] );
 }
 
 // draw sphere function

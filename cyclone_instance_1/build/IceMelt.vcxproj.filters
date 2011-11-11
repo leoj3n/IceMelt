@@ -30,6 +30,9 @@
     <ClCompile Include="..\src\demos\IceMelt\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\demos\IceMelt\Molecule.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\demos\app.h">
