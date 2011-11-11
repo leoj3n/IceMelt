@@ -25,15 +25,19 @@
 //#include "Molecule.h" // molecule header file
 //#include "Surface.h" // surface header file
 
-class IceMelt : public Application
+class IceMelt : public MassAggregateApplication
 {
-	cyclone::Particle particle1;
-	cyclone::Particle particle2;
+	cyclone::ParticleWorld world; // the world
+	cyclone::Particle *molecules; // keep track of all molecules
+	cyclone::GroundContacts groundContactGenerator;
 
-	cyclone::ParticleForceRegistry registry;
+	//[del]cyclone::ParticleForceRegistry registry;
+
+	// create molecule ... will add to particle registry
+	//void createMolecule();
 
 	// draws sphere
-	void drawSphere( cyclone::Vector3 pos );
+	void drawSphere( cyclone::Particle p );
 
 public:
 	// creates a new demo object
@@ -52,33 +56,40 @@ public:
 // method definitions:
 
 // CONSTRUCTOR
-IceMelt::IceMelt() {
-	// first particle
-	particle1.setMass( 100 );
-	particle1.setPosition( -10.0f, 0, 0 );
-	particle1.setDamping( 1 );
-
-	// second particle
-	particle2.setMass( 100 );
-	particle2.setPosition( 10.0f, 0, 0 );
-	particle2.setDamping( 1 );
+IceMelt::IceMelt() : MassAggregateApplication( 2 ) {
+	particleArray[0].setPosition( 0, 0, 1 );
+    particleArray[1].setPosition( 0, 0, -1 );
+	
+    for( unsigned i = 0; i < 2; i++ ) {
+        particleArray[i].setMass( 100 );
+        particleArray[i].setVelocity( 0, 0, 0 );
+        particleArray[i].setDamping( 0.9f );
+        particleArray[i].setAcceleration( cyclone::Vector3::GRAVITY );
+        particleArray[i].clearAccumulator();
+    }
 
 	// springs
-	registry.add( &particle1, new cyclone::ParticleSpring( &particle2, 0.50f, 2.0f ) );
-	registry.add( &particle2, new cyclone::ParticleSpring( &particle1, 0.50f, 2.0f ) );
+	//registry.add( &particle1, new cyclone::ParticleSpring( &particle2, 0.50f, 2.0f ) );
+	//registry.add( &particle2, new cyclone::ParticleSpring( &particle1, 0.50f, 2.0f ) );
 }
 
 // UPDATE
 void IceMelt::update() {
+	// Clear accumulators
+    world.startFrame();
+
 	// Find the duration of the last frame in seconds
 	float duration = (float)TimingData::get().lastFrameDuration * 0.001f;
 	if (duration <= 0.0f) return;
 
-	registry.updateForces( duration );
-	particle1.integrate( duration );
-	particle2.integrate( duration );
+	// Run the simulation
+    world.runPhysics(duration);
 
-	Application::update();
+	/*registry.updateForces( duration );
+	particle1.integrate( duration );
+	particle2.integrate( duration );*/
+
+    Application::update();
 }
 
 // DRAW
@@ -89,17 +100,23 @@ void IceMelt::display() {
     gluLookAt( 0.0, 0.0, 10.0,  0.0, 0.0, 0.0,  0.0, 1.0, 0.0 );
 
 	glColor3f( 0, 0, 1.0f );
-	drawSphere( particle1.getPosition() );
+	drawSphere( particle1 );
 
 	glColor3f( 1.0f, 0, 0 );
-	drawSphere( particle2.getPosition() );
+	drawSphere( particle2 );
+}
+
+// create molecule function
+void IceMelt::createMolecule() {
+
 }
 
 // draw sphere function
-void IceMelt::drawSphere( cyclone::Vector3 pos ) {
+void IceMelt::drawSphere( cyclone::Particle p ) {
 	glPushMatrix();
+	cyclone::Vector3 pos = p.getPosition();
 	glTranslatef( pos.x, pos.y, pos.z );
-	glutSolidSphere( 0.25f, 20, 10 );
+	glutSolidSphere( (p.getMass() / 4) * 0.01f, 10, 10 );
 	glPopMatrix();
 }
 
