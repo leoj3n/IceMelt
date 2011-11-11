@@ -1,32 +1,65 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cyclone", "cyclone.vcxproj", "{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bigballistic", "bigballistic.vcxproj", "{DEA62D2B-98BD-472E-8AC8-00683B1BDEEC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "demos", "demos", "{001EE0F4-5241-4F18-9A5A-95D9FEA7C7FA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IceMelt", "IceMelt.vcxproj", "{8E2C0A8C-A817-4919-AEA0-565B97423BED}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ballistic", "ballistic.vcxproj", "{6D85AC90-7BE1-4632-8F94-F8C317F72C31}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "blob", "blob.vcxproj", "{699D3ADF-7906-4135-B77D-BA6AC795557E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bridge", "bridge.vcxproj", "{F35D1BB3-D9BF-43A4-BBBC-3064A17AF91E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "explosion", "explosion.vcxproj", "{8267B08E-F147-4DB5-89E4-2E411D93DCA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fireworks", "fireworks.vcxproj", "{F25B41B0-E99B-41A3-8A91-6A55BED1C20E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "flightsim", "flightsim.vcxproj", "{D507E47E-FE8D-42AD-BF4A-BA369D1AED9C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fracture", "fracture.vcxproj", "{9AE27785-09FF-4CAA-8399-24A774DAA2BE}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "platform", "platform.vcxproj", "{9AACE042-C173-442F-AEA6-9809DE49ECC3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ragdoll", "ragdoll.vcxproj", "{17274C15-5742-427E-B7CD-1A2B20AD8BFC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sailboat", "sailboat.vcxproj", "{689D833D-FFF7-4378-B92B-35A77F986F47}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E9A54F0-B92F-4E05-A31A-640DC1E99E4E} = {5E9A54F0-B92F-4E05-A31A-640DC1E99E4E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
