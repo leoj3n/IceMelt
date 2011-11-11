@@ -155,6 +155,7 @@ class MassAggregateApplication : public Application
 protected:
     cyclone::ParticleWorld world;
     cyclone::Particle *particleArray;
+//	cylcone::Molecule *particleArray;
     cyclone::GroundContacts groundContactGenerator;
 
 public:
