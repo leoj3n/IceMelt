@@ -27,10 +27,10 @@
     <ClCompile Include="..\src\demos\timing.cpp">
       <Filter>Common Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\demos\IceMelt\main.cpp">
+    <ClCompile Include="..\src\demos\IceMelt\Molecule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\demos\IceMelt\Molecule.cpp">
+    <ClCompile Include="..\src\demos\IceMelt\IceMelt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

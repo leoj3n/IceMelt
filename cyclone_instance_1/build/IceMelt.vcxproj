@@ -92,7 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\demos\app.cpp" />
-    <ClCompile Include="..\src\demos\IceMelt\main.cpp" />
+    <ClCompile Include="..\src\demos\IceMelt\IceMelt.cpp" />
     <ClCompile Include="..\src\demos\IceMelt\Molecule.cpp" />
     <ClCompile Include="..\src\demos\main.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>

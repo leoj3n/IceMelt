@@ -24,13 +24,14 @@
 
 #include "Molecule.h" // molecule header file
 //#include "Surface.h" // surface header file
+// #define PARTICLE_COUNT 8
 
 class IceMelt : public MassAggregateApplication
 {
 	cyclone::ParticleWorld world; // the world
 	cyclone::Particle *molecules; // keep track of all molecules
 	cyclone::GroundContacts groundContactGenerator;
-
+	
 	//[delete me?] cyclone::ParticleForceRegistry registry;
 
 	// draws sphere
@@ -39,6 +40,7 @@ class IceMelt : public MassAggregateApplication
 public:
 	// creates a new demo object
 	IceMelt();
+//	IceMelt(const int PARTICLE_COUNT);
 
 	// returns the window title for the demo
 	virtual const char* getTitle();
@@ -53,6 +55,26 @@ public:
 // method definitions:
 
 // CONSTRUCTOR
+//IceMelt::IceMelt()
+//:
+//MassAggregateApplication( 2 ),
+//world( 20 ) {
+//	particleArray[0].setPosition( 0, 0, 1 );
+//    particleArray[1].setPosition( 0, 0, -1 );
+//	
+//    for( unsigned i = 0; i < 2; i++ ) {
+//        particleArray[i].setMass( 100 );
+//        particleArray[i].setVelocity( 0, 0, 0 );
+//        particleArray[i].setDamping( 0.9f );
+//        particleArray[i].setAcceleration( cyclone::Vector3::GRAVITY );
+//        particleArray[i].clearAccumulator();
+//    }
+//
+//	// springs
+//	//registry.add( &particle1, new cyclone::ParticleSpring( &particle2, 0.50f, 2.0f ) );
+//	//registry.add( &particle2, new cyclone::ParticleSpring( &particle1, 0.50f, 2.0f ) );
+//}
+
 IceMelt::IceMelt()
 :
 MassAggregateApplication( 2 ),
@@ -72,6 +94,7 @@ world( 20 ) {
 	//registry.add( &particle1, new cyclone::ParticleSpring( &particle2, 0.50f, 2.0f ) );
 	//registry.add( &particle2, new cyclone::ParticleSpring( &particle1, 0.50f, 2.0f ) );
 }
+
 
 // UPDATE
 void IceMelt::update() {
