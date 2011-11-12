@@ -1,6 +1,6 @@
 /*-------------------------------------------------------------------------*
  *---																	---*
- *---	main.cpp														---*
+ *---	IceMelt.cpp														---*
  *---																	---*
  *---	This program simulates ice melting using Cyclone.				---*
  *---																	---*
@@ -53,8 +53,8 @@ public:
 IceMelt::IceMelt()
 :
 MassAggregateApplication( 2 ) {
-	particleArray[0].setPosition( 10, 5, 0 );
-    particleArray[1].setPosition( -10, -5, 0 );
+	particleArray[0].setPosition( 10, 10, 0 );
+    particleArray[1].setPosition( 0, 8, 0 );
 	
     for( unsigned i = 0; i < 2; i++ ) {
         particleArray[i].setMass( 100 );
@@ -63,10 +63,6 @@ MassAggregateApplication( 2 ) {
         particleArray[i].setAcceleration( cyclone::Vector3::GRAVITY );
         particleArray[i].clearAccumulator();
     }
-
-	// springs
-	//registry.add( &particle1, new cyclone::ParticleSpring( &particle2, 0.50f, 2.0f ) );
-	//registry.add( &particle2, new cyclone::ParticleSpring( &particle1, 0.50f, 2.0f ) );
 }
 
 // UPDATE
