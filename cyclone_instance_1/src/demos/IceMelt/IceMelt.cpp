@@ -330,33 +330,62 @@ massPos(0,0,0.5f)
 	count = 0;
 	int rodNumber = 0;
 	for(int i = 0; i < cubeDepth; i++)
-
 	{
-		for(int j = 0; j <= cubeDepth; j++)
+		for(int j = 0; j < cubeDepth; j++)
 		{
-			for(int k = 0; k <= cubeDepth; k++)
+			//single line . - . - .
+			for(int k = 1; k < cubeDepth; k++)
 			{
-				rods[rodNumber].particle[count] = &particleArray[count];
-				rods[rodNumber].particle[count+1] = &particleArray[count+1];
+				rods[rodNumber].particle[0] = &particleArray[count];
+				rods[rodNumber].particle[1] = &particleArray[count+1];
 				rods[rodNumber].length = ICE_DIST;
 				rodNumber++;
 				count++;
 			}
-			count++;
+//			count++;
 
-	/* */
+	/*After Horizontal Rods added */
+			/*.  .  .
+			|  |  |
+			.  .  .*/
+/*
 			int x = 0;
-			rodNumber = 0;
 			for(int k = cubeDepth; k > 0; k--)	 
 			{
-				rods[rodNumber].particle[count-k] = &particleArray[count-k];
+				rods[rodNumber].particle[0] = &particleArray[count-k];
+				rods[rodNumber].particle[1] = &particleArray[count+j];
+				rods[rodNumber].length = ICE_DIST;
+				rodNumber++;
+				x++;
+			}
+			*/
+			if(j != cubeDepth-1){
+
+				int x = 0;
+				for(int k = cubeDepth; k > 0; k--)
+				{
+					rods[rodNumber].particle[count-k] = &particleArray[count-k];
+					rods[rodNumber].particle[count+x] = &particleArray[count+x];
+					rods[rodNumber].length = ICE_DIST;
+					rodNumber++;
+					x++;
+				}
+
+			}
+		}
+		if(i != cubeDepth-1){
+
+			int x = 0;
+			for(int j = cubeDepth; j > 0; j--)
+			{
+				rods[rodNumber].particle[count-j] = &particleArray[count-j];
 				rods[rodNumber].particle[count+x] = &particleArray[count+x];
 				rods[rodNumber].length = ICE_DIST;
 				rodNumber++;
-			
-	x++;
+				x++;
 			}
 		}
+
 	}
 
 	for (int i = 0; i < NUM_RODS; i++)
