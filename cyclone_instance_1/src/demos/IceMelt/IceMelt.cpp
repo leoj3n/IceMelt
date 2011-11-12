@@ -6,7 +6,7 @@
  *---																	---*
  *---	----	----	----	----	----	----	----	----	---*
  *---																	---*
- *---	Version 1.0								2011 November 8			---*
+ *---	Version 1.0								2011 November 11		---*
  *---																	---*
  *---	Joel Kuczmarski			Dan Wojo		Derek Hearn				---*
  *---																	---*
@@ -19,28 +19,23 @@
 #endif
 
 #include <cyclone/cyclone.h>
-#include "../app.h"
+#include "app.h"
 #include "../timing.h"
 
 #include "Molecule.h" // molecule header file
 //#include "Surface.h" // surface header file
-// #define PARTICLE_COUNT 8
 
 class IceMelt : public MassAggregateApplication
 {
-	cyclone::ParticleWorld world; // the world
-	cyclone::Particle *molecules; // keep track of all molecules
-	cyclone::GroundContacts groundContactGenerator;
-	
-	//[delete me?] cyclone::ParticleForceRegistry registry;
+	//cyclone::ParticleRod *rods;
+	Molecule *molecules; // keep track of all molecules
 
 	// draws sphere
-	void drawSphere( cyclone::Particle p );
+	void drawSphere( cyclone::Particle &p );
 
 public:
 	// creates a new demo object
 	IceMelt();
-//	IceMelt(const int PARTICLE_COUNT);
 
 	// returns the window title for the demo
 	virtual const char* getTitle();
@@ -55,32 +50,11 @@ public:
 // method definitions:
 
 // CONSTRUCTOR
-//IceMelt::IceMelt()
-//:
-//MassAggregateApplication( 2 ),
-//world( 20 ) {
-//	particleArray[0].setPosition( 0, 0, 1 );
-//    particleArray[1].setPosition( 0, 0, -1 );
-//	
-//    for( unsigned i = 0; i < 2; i++ ) {
-//        particleArray[i].setMass( 100 );
-//        particleArray[i].setVelocity( 0, 0, 0 );
-//        particleArray[i].setDamping( 0.9f );
-//        particleArray[i].setAcceleration( cyclone::Vector3::GRAVITY );
-//        particleArray[i].clearAccumulator();
-//    }
-//
-//	// springs
-//	//registry.add( &particle1, new cyclone::ParticleSpring( &particle2, 0.50f, 2.0f ) );
-//	//registry.add( &particle2, new cyclone::ParticleSpring( &particle1, 0.50f, 2.0f ) );
-//}
-
 IceMelt::IceMelt()
 :
-MassAggregateApplication( 2 ),
-world( 20 ) {
-	particleArray[0].setPosition( 0, 0, 1 );
-    particleArray[1].setPosition( 0, 0, -1 );
+MassAggregateApplication( 2 ) {
+	particleArray[0].setPosition( 10, 5, 0 );
+    particleArray[1].setPosition( -10, -5, 0 );
 	
     for( unsigned i = 0; i < 2; i++ ) {
         particleArray[i].setMass( 100 );
@@ -95,7 +69,6 @@ world( 20 ) {
 	//registry.add( &particle2, new cyclone::ParticleSpring( &particle1, 0.50f, 2.0f ) );
 }
 
-
 // UPDATE
 void IceMelt::update() {
 	// Clear accumulators
@@ -107,10 +80,6 @@ void IceMelt::update() {
 
 	// Run the simulation
     world.runPhysics( duration );
-
-	/*registry.updateForces( duration );
-	particle1.integrate( duration );
-	particle2.integrate( duration );*/
 
     Application::update();
 }
@@ -130,7 +99,7 @@ void IceMelt::display() {
 }
 
 // draw sphere function
-void IceMelt::drawSphere( cyclone::Particle p ) {
+void IceMelt::drawSphere( cyclone::Particle &p ) {
 	glPushMatrix();
 	cyclone::Vector3 pos = p.getPosition();
 	glTranslatef( pos.x, pos.y, pos.z );

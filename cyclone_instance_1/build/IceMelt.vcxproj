@@ -91,7 +91,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\demos\app.cpp" />
+    <ClCompile Include="..\src\demos\IceMelt\app.cpp" />
     <ClCompile Include="..\src\demos\IceMelt\IceMelt.cpp" />
     <ClCompile Include="..\src\demos\IceMelt\Molecule.cpp" />
     <ClCompile Include="..\src\demos\main.cpp">
@@ -101,7 +101,7 @@
     <ClCompile Include="..\src\demos\timing.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\demos\app.h" />
+    <ClInclude Include="..\src\demos\IceMelt\app.h" />
     <ClInclude Include="..\src\demos\IceMelt\Molecule.h" />
     <ClInclude Include="..\src\demos\IceMelt\Surface.h" />
     <ClInclude Include="..\src\demos\timing.h" />

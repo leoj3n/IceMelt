@@ -18,9 +18,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\demos\app.cpp">
-      <Filter>Common Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\demos\main.cpp">
       <Filter>Common Files</Filter>
     </ClCompile>
@@ -33,11 +30,11 @@
     <ClCompile Include="..\src\demos\IceMelt\IceMelt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\demos\IceMelt\app.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\demos\app.h">
-      <Filter>Common Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\demos\timing.h">
       <Filter>Common Files</Filter>
     </ClInclude>
@@ -45,6 +42,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\demos\IceMelt\Surface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\demos\IceMelt\app.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

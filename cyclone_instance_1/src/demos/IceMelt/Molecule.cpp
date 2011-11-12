@@ -8,5 +8,4 @@ void Molecule::update( cyclone::real duration ) {
 		state = 1;
 	else
 		state = 0;
-
 }
