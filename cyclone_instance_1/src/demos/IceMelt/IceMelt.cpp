@@ -342,23 +342,10 @@ massPos(0,0,0.5f)
 				rodNumber++;
 				count++;
 			}
-//			count++;
-
-	/*After Horizontal Rods added */
+			/*After Horizontal Rods added */
 			/*.  .  .
 			|  |  |
 			.  .  .*/
-/*
-			int x = 0;
-			for(int k = cubeDepth; k > 0; k--)	 
-			{
-				rods[rodNumber].particle[0] = &particleArray[count-k];
-				rods[rodNumber].particle[1] = &particleArray[count+j];
-				rods[rodNumber].length = ICE_DIST;
-				rodNumber++;
-				x++;
-			}
-			*/
 			if(j != cubeDepth-1){
 
 				int x = 0;
@@ -373,27 +360,52 @@ massPos(0,0,0.5f)
 
 			}
 		}
-		if(i != cubeDepth-1){
-
-			int x = 0;
-			for(int j = cubeDepth; j > 0; j--)
+//		if(i != cubeDepth-1){
+			//single line . - . - .
+			for(int k = 1; k < cubeDepth; k++)
 			{
-				rods[rodNumber].particle[count-j] = &particleArray[count-j];
-				rods[rodNumber].particle[count+x] = &particleArray[count+x];
+				rods[rodNumber].particle[0] = &particleArray[count];
+				rods[rodNumber].particle[1] = &particleArray[count+1];
 				rods[rodNumber].length = ICE_DIST;
 				rodNumber++;
-				x++;
+				count++;
 			}
+			/*After Horizontal Rods added */
+			/*.  .  .
+			|  |  |
+			.  .  .*/
+			if(i != cubeDepth-1){
+
+				int x = 0;
+				for(int k = cubeDepth; k > 0; k--)
+				{
+					rods[rodNumber].particle[count-k] = &particleArray[count-k];
+					rods[rodNumber].particle[count+x] = &particleArray[count+x];
+					rods[rodNumber].length = ICE_DIST;
+					rodNumber++;
+					x++;
+				}
+
+//			}
+			/*			int x = 0;
+			for(int j = cubeDepth; j > 0; j--)
+			{
+			rods[rodNumber].particle[count-j] = &particleArray[count-j];
+			rods[rodNumber].particle[count+x] = &particleArray[count+x];
+			rods[rodNumber].length = ICE_DIST;
+			rodNumber++;
+			x++;
+			} */
 		}
 
 	}
 
-	for (int i = 0; i < NUM_RODS; i++)
+/*	for (int i = 0; i < NUM_RODS; i++)
     {
         world.getContactGenerators().push_back(&rods[i]);
     }
-
-    updateAdditionalMass();
+*/
+//    updateAdditionalMass();
 }
 
 PlatformDemo::~PlatformDemo()
@@ -456,14 +468,14 @@ void PlatformDemo::display()
 
     glBegin(GL_LINES);
     glColor3f(0,0,1);
-   /* for (unsigned i = 0; i < ROD_COUNT; i++)
+/*    for (unsigned i = 0; i < ROD_COUNT; i++)
     {
         cyclone::Particle **particles = rods[i].particle;
         const cyclone::Vector3 &p0 = particles[0]->getPosition();
         const cyclone::Vector3 &p1 = particles[1]->getPosition();
         glVertex3f(p0.x, p0.y, p0.z);
         glVertex3f(p1.x, p1.y, p1.z);
-    }*/
+    } */
     glEnd();
 
     glColor3f(1,0,0);
@@ -517,6 +529,6 @@ void PlatformDemo::key(unsigned char key)
  */
 Application* getApplication()
 {
-    return new PlatformDemo(2);
+    return new PlatformDemo(4);
 }
 
