@@ -22,8 +22,7 @@
 #include "app.h"
 #include "../timing.h"
 
-#include "Molecule.h" // molecule header file
-//#include "Surface.h" // surface header file
+#define NUM_MOLECULES 2
 
 class IceMelt : public MassAggregateApplication
 {
@@ -31,7 +30,7 @@ class IceMelt : public MassAggregateApplication
 	Molecule *molecules; // keep track of all molecules
 
 	// draws sphere
-	void drawSphere( cyclone::Particle &p );
+	void drawSphere( Molecule &m );
 
 public:
 	// creates a new demo object
@@ -56,12 +55,14 @@ MassAggregateApplication( 2 ) {
 	particleArray[0].setPosition( 10, 10, 0 );
     particleArray[1].setPosition( 0, 8, 0 );
 	
-    for( unsigned i = 0; i < 2; i++ ) {
-        particleArray[i].setMass( 100 );
-        particleArray[i].setVelocity( 0, 0, 0 );
-        particleArray[i].setDamping( 0.9f );
-        particleArray[i].setAcceleration( cyclone::Vector3::GRAVITY );
-        particleArray[i].clearAccumulator();
+	// setup molecules
+    for( unsigned i = 0; i < NUM_MOLECULES; i++ ) {
+		Molecule &m = particleArray[i];
+        m.setMass( 100 );
+        m.setVelocity( 0, 0, 0 );
+        m.setDamping( 0.9f );
+        m.setAcceleration( cyclone::Vector3::GRAVITY );
+        m.clearAccumulator();
     }
 }
 
@@ -73,6 +74,12 @@ void IceMelt::update() {
 	// Find the duration of the last frame in seconds
 	float duration = (float)TimingData::get().lastFrameDuration * 0.001f;
 	if (duration <= 0.0f) return;
+
+	// update molecules
+	for( unsigned i = 0; i < NUM_MOLECULES; i++ ) {
+		Molecule &m = particleArray[i];
+		m.update( duration );
+	}
 
 	// Run the simulation
     world.runPhysics( duration );
@@ -87,19 +94,19 @@ void IceMelt::display() {
     glLoadIdentity();
     gluLookAt( 0.0, 0.0, 10.0,  0.0, 0.0, 0.0,  0.0, 1.0, 0.0 );
 
-	glColor3f( 0, 0, 1.0f );
-	drawSphere( particleArray[0] );
-
-	glColor3f( 1.0f, 0, 0 );
-	drawSphere( particleArray[1] );
+	for( unsigned i = 0; i < NUM_MOLECULES; i++ ) {
+		Molecule &m = particleArray[i];
+		glColor3f( m.getTemp(), 0, 0 );
+		drawSphere( m );
+	}
 }
 
 // draw sphere function
-void IceMelt::drawSphere( cyclone::Particle &p ) {
+void IceMelt::drawSphere( Molecule &m ) {
 	glPushMatrix();
-	cyclone::Vector3 pos = p.getPosition();
+	cyclone::Vector3 pos = m.getPosition();
 	glTranslatef( pos.x, pos.y, pos.z );
-	glutSolidSphere( (p.getMass() / 4) * 0.01f, 10, 10 );
+	glutSolidSphere( (m.getMass() / 4) * 0.01f, 10, 10 );
 	glPopMatrix();
 }
 

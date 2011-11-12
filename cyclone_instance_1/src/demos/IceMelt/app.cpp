@@ -134,7 +134,7 @@ MassAggregateApplication::MassAggregateApplication(unsigned int particleCount)
 :
 world(particleCount*10)
 {
-    particleArray = new cyclone::Particle[particleCount];
+    particleArray = new Molecule[particleCount]; // changed from cyclone::Particle
     for (unsigned i = 0; i < particleCount; i++)
     {
         world.getParticles().push_back(particleArray + i);

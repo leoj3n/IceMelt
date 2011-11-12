@@ -13,6 +13,8 @@
 
 #include <cyclone/cyclone.h>
 
+#include "Molecule.h" // added
+
 /**
  * An application is the base class for all demonstration progams.
  * GLUT is a c-style API, which calls bare functions. This makes
@@ -154,7 +156,7 @@ class MassAggregateApplication : public Application
 {
 protected:
     cyclone::ParticleWorld world;
-    cyclone::Particle *particleArray;
+    Molecule *particleArray; // changed from cyclone::Particle
     cyclone::GroundContacts groundContactGenerator;
 
 public:

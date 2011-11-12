@@ -4,8 +4,13 @@
 void Molecule::update( cyclone::real duration ) {
 	integrate( duration );
 
-	if (temp > 100.0f)
-		state = 1;
-	else
-		state = 0;
+	this->setTemp( this->getTemp() + (duration / 10) ); // temporary for testing color
+}
+
+void Molecule::setTemp( cyclone::real t ) {
+	if (t <= 1) this->temp_ = t;
+}
+
+cyclone::real Molecule::getTemp() {
+	return this->temp_;
 }

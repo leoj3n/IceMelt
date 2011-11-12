@@ -3,12 +3,15 @@
 
 class Molecule : public cyclone::Particle
 {
+	cyclone::real temp_; // what temperature is the molecule
+	unsigned state_;
+
 public:
-	cyclone::real temp; // what temperature is the molecule
-	unsigned state;
-  // cyclone::ParticleRod *rods;
+	Molecule() : temp_( 0 ), state_( 0 ) {}; // default constructor
 
-   void update( cyclone::real duration );
-private:
+	void update( cyclone::real duration );
 
+	void setTemp( cyclone::real t );
+	
+	cyclone::real getTemp();
 };
