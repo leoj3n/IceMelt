@@ -1,19 +1,12 @@
 /*
- * The base application class for all demos.
- *
- * Part of the Cyclone physics system.
- *
- * Copyright (c) Icosagon 2003. All Rights Reserved.
- *
- * This software is distributed under licence. Use of this software
- * implies agreement with all terms and conditions of the accompanying
- * software licence.
+ * The base application class for Ice Melt.
  */
 #include <cstdlib>
 
 #include <cyclone/cyclone.h>
 
-#include "Molecule.h" // added
+#include "Molecule.h" // extends Particle
+#include "Bond.h" // extends Rod
 
 /**
  * An application is the base class for all demonstration progams.
@@ -156,11 +149,11 @@ class MassAggregateApplication : public Application
 {
 protected:
     cyclone::ParticleWorld world;
-    Molecule *particleArray; // changed from cyclone::Particle
+    Molecule *moleculeArray; // changed from cyclone::Particle
     cyclone::GroundContacts groundContactGenerator;
 
 public:
-    MassAggregateApplication(unsigned int particleCount);
+    MassAggregateApplication(unsigned int moleculeCount);
     virtual ~MassAggregateApplication();
 
     /** Update the particle positions. */

@@ -1,3 +1,4 @@
 # this file should be used ignore temp files left behind by editors like vim
 *.orig
 *.swp
+*.bak

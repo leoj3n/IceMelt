@@ -130,14 +130,14 @@ void Application::renderText(float x, float y, const char *text, void *font)
 }
 
 
-MassAggregateApplication::MassAggregateApplication(unsigned int particleCount)
+MassAggregateApplication::MassAggregateApplication(unsigned int moleculeCount)
 :
-world(particleCount*10)
+world(moleculeCount*10)
 {
-    particleArray = new Molecule[particleCount]; // changed from cyclone::Particle
-    for (unsigned i = 0; i < particleCount; i++)
+    moleculeArray = new Molecule[moleculeCount]; // changed from cyclone::Particle
+    for (unsigned i = 0; i < moleculeCount; i++)
     {
-        world.getParticles().push_back(particleArray + i);
+        world.getParticles().push_back(moleculeArray + i);
     }
 
     groundContactGenerator.init(&world.getParticles());
@@ -146,7 +146,7 @@ world(particleCount*10)
 
 MassAggregateApplication::~MassAggregateApplication()
 {
-    delete[] particleArray;
+    delete[] moleculeArray;
 }
 
 void MassAggregateApplication::initGraphics()

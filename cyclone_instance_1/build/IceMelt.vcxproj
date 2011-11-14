@@ -92,6 +92,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\demos\IceMelt\app.cpp" />
+    <ClCompile Include="..\src\demos\IceMelt\Bond.cpp" />
     <ClCompile Include="..\src\demos\IceMelt\IceMelt.cpp" />
     <ClCompile Include="..\src\demos\IceMelt\Molecule.cpp" />
     <ClCompile Include="..\src\demos\main.cpp">
@@ -102,12 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\demos\IceMelt\app.h" />
+    <ClInclude Include="..\src\demos\IceMelt\Bond.h" />
     <ClInclude Include="..\src\demos\IceMelt\Molecule.h" />
-    <ClInclude Include="..\src\demos\IceMelt\Surface.h" />
     <ClInclude Include="..\src\demos\timing.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
