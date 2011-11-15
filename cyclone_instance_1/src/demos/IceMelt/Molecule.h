@@ -1,8 +1,7 @@
-/* Molecule header file. */
 #ifndef MOLECULE_H
 #define MOLECULE_H
 
-#include "../../../include/cyclone/particle.h"
+#include "IceMelt.h"
 
 class Molecule : public cyclone::Particle
 {
@@ -14,21 +13,31 @@ public:
 
 	void update( cyclone::real duration );
 
-	void setTemp( cyclone::real t );
+	void draw();
+
+	// Accessors:
+
 	cyclone::real getTemp();
 	const cyclone::real getTemp() const;
 
-	void setState( unsigned s );
 	unsigned getState();
 	const unsigned getState() const;
 
+	// Muatators:
+
+	void setTemp( cyclone::real t );
+	void setState( unsigned s );
+
+	// Operators:
+
 	Molecule& operator=(const Molecule &source) {
-		if (this != &m) { // if not self
-			temp_ = m.getTemp();
-			state_ = m.getState();
+		if (this != &source) { // if not self
+			temp_ = source.getTemp();
+			state_ = source.getState();
 		}
 
 		return *this;
 	}
 };
+
 #endif
