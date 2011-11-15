@@ -24,6 +24,7 @@
 
 #define BASE_MASS 1
 #define ICE_DIST 0.5f
+#define ICE_CROSS_DIST = sqrt( 2.0f ) * ICE_DIST
 
 class IceMelt : public MassAggregateApplication
 {
@@ -34,7 +35,7 @@ class IceMelt : public MassAggregateApplication
 	const unsigned moleculeCount_;	//--> may need to make non-const for melting
 
 	// for using space to reset the cube
-	Molecule moleculeArrayOrig;
+	Molecule moleculeArrayOrig_;
 	bool spaceFlag_;
 
 	void drawSphere( Molecule &m ); // draws sphere
@@ -64,13 +65,18 @@ cubeDepth_( depth ),
 rodCount_( 2 * depth * depth * (depth - 1) + depth * depth * (depth - 1) ),
 moleculeCount_( depth * depth * depth ),
 MassAggregateApplication( depth * depth * depth ) {
+	moleculeArrayOrig_ = moleculeArray;
+	rods_ = new Bond[rodCount_];
 	spaceFlag_ = false;
+
+	const int SHEET = cubeDepth_ * cubeDepth_; // @TODO add comments about this variable name
+	const int c = cubeDepth_ - 1;
 
 	int count = 0;
 	for( unsigned i = 0; i < cubeDepth_; i++ ) {
 		for( unsigned j = 0; j < cubeDepth_; j++ ) {
 			for( unsigned k = 0; k < cubeDepth_; k++ ) {
-				moleculeArray[count].setPosition( ICE_DIST * i, ICE_DIST * j, ICE_DIST * k );
+				moleculeArray[count].setPosition( ICE_DIST * k, ICE_DIST * i, ICE_DIST * j );
 				moleculeArray[count].setMass( BASE_MASS );
 				moleculeArray[count].setVelocity( 0, 0, 0 );
 				moleculeArray[count].setDamping( 0.9f );
@@ -80,39 +86,50 @@ MassAggregateApplication( depth * depth * depth ) {
 		}
 	}
 
-	moleculeArrayOrig = moleculeArray;
-
-	rods_ = new Bond[rodCount_];
-
 	count = 0;
 	int rodNumber = 0;
 	for( unsigned i = 0; i < cubeDepth_; i++ ) {
 		for( unsigned j = 0; j < cubeDepth_; j++ ) {
-			for( unsigned k = 1; k < cubeDepth_; k++ ) {
+			for( unsigned k = 1; k < cubeDepth_; k++ ) { // link all molecules in row
 				rods_[rodNumber].particle[0] = &moleculeArray[count];
 				rods_[rodNumber].particle[1] = &moleculeArray[count+1];
 				rods_[rodNumber].length = ICE_DIST;
 				rodNumber++;
 				count++;
+				if( rodNumber >= rodCount_ )
+                {
+                    break;
+                }
 			}
 
 			if( j != cubeDepth_ - 1 ) {
 				int x = 1;
-				int c = cubeDepth_ - 1;
+				int temp = c;
 
-				for( unsigned k = cubeDepth_; k > 0; k-- ) {
-					rods_[rodNumber].particle[0] = &moleculeArray[count-c];
+				for( unsigned k = cubeDepth_; k > 0; k-- ) { // j connector
+					rods_[rodNumber].particle[0] = &moleculeArray[count-temp];
 					rods_[rodNumber].particle[1] = &moleculeArray[count+x];
 					rods_[rodNumber].length = ICE_DIST;
 					rodNumber++;
-					x++;
-					c--;
+					if( rodNumber >= rodCount_ )
+                    {
+                        break;
+                    }
+                    x++;
+                    temp--;
 				}
+				//back cross down
+                for( k = 0; k < c; k++ ) {
+                    //good works!
+                    rods[rodNumber].particle[0] = &particleArray[count-k];
+                    rods[rodNumber].particle[1] = &particleArray[count-k+c];
+                    rods[rodNumber].length = ICE_CROSS_DIST;
+                    rodNumber++;
+                }
 			}
 			count++;
 		}
 
-		int SHEET = cubeDepth_ * cubeDepth_; // @TODO add comments about this variable name
 		int p, q;
 
 		if( i != cubeDepth_ - 1 ){
@@ -124,9 +141,32 @@ MassAggregateApplication( depth * depth * depth ) {
 				rods_[rodNumber].particle[1] = &moleculeArray[count-q];
 				rods_[rodNumber].length = ICE_DIST;
 				rodNumber++;
+				if (rodNumber >= rodCount) break;
 				p++;
 				q--;
 			}
+
+			for( int j = 0; j < SHEET; j++ ) {
+                //crossing the fronts
+                //not last in row
+                if( j % cubeDepth ) {
+                    //forward cross
+                    rods[rodNumber].particle[0] = &particleArray[count-1-j];
+                    rods[rodNumber].particle[1] = &particleArray[count-j+SHEET];
+                    rods[rodNumber].length = ICE_CROSS_DIST;
+                    rodNumber++;
+                }
+
+                const int rowMarker = j / cubeDepth_;
+
+                //crossing the sides
+                if( rowMarker > 0 ) {
+                    rods[rodNumber].particle[0] = &particleArray[count-1-j];
+                    rods[rodNumber].particle[1] = &particleArray[count-1-j+SHEET+cubeDepth];
+                    rods[rodNumber].length = ICE_CROSS_DIST;
+                    rodNumber++;
+                }
+            }
 		}
 	}
 
@@ -220,5 +260,5 @@ const char* IceMelt::getTitle() {
  * object (with new) and return a pointer.
  */
 Application* getApplication() {
-	return new IceMelt( 4 ); // depth gets passed as an unsigned int
+	return new IceMelt( 3 ); // depth gets passed as an unsigned int
 }
