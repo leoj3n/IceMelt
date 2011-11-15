@@ -12,7 +12,7 @@ class Molecule : public cyclone::Particle
 public:
 	Molecule() : temp_( 0 ), state_( 0 ) {}; // default constructor
 
-	void update( cyclone::real duration );
+	virtual void update( cyclone::real duration );
 
 	void setTemp( cyclone::real t );
 	cyclone::real getTemp();
@@ -23,9 +23,9 @@ public:
 	const unsigned getState() const;
 
 	Molecule& operator=(const Molecule &source) {
-		if (this != &m) { // if not self
-			temp_ = m.getTemp();
-			state_ = m.getState();
+		if (this != &source) { // if not self
+			temp_ = source.getTemp();
+			state_ = source.getState();
 		}
 
 		return *this;

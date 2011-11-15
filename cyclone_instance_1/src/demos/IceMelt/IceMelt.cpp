@@ -42,6 +42,7 @@ class IceMelt : public MassAggregateApplication
 public:
 	IceMelt();
 	IceMelt( const unsigned depth );
+	virtual ~IceMelt();
 
 	virtual void update(); // update the molecule positions
 	virtual void display();
@@ -80,7 +81,7 @@ MassAggregateApplication( depth * depth * depth ) {
 		}
 	}
 
-	moleculeArrayOrig = moleculeArray;
+	// moleculeArrayOrig = moleculeArray; // copy constructor needed
 
 	rods_ = new Bond[rodCount_];
 
@@ -135,39 +136,39 @@ MassAggregateApplication( depth * depth * depth ) {
     }
 }
 
+IceMelt::~IceMelt() {
+    if (rods_) delete[] rods_;
+}
+
 // UPDATE
 void IceMelt::update() {
-    world.startFrame(); // clear accumulators
+    MassAggregateApplication::update();
 
 	// find the duration of the last frame in seconds
-	float duration = (float)TimingData::get().lastFrameDuration * 0.001f;
-	if (duration <= 0.0f) return;
+	//float duration = (float)TimingData::get().lastFrameDuration * 0.001f;
+	//if (duration <= 0.0f) return;
 
 	// update molecules
-	for( unsigned i = 0; i < moleculeCount_; i++ ) {
+	/*for( unsigned i = 0; i < moleculeCount_; i++ ) {
 		Molecule &m = moleculeArray[i];
 		m.update( duration );
-	}
-
-	// run the simulation
-    world.runPhysics( duration );
-
-    Application::update();
+	}*/
 }
 
 // DRAW
 void IceMelt::display() {
-	// clear the viewport and set the camera direction
-	
+	/*// clear the viewport and set the camera direction
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
 	glLoadIdentity();
 	gluLookAt( 0.0, 0.0, 10.0,  0.0, 0.0, 0.0,  0.0, 1.0, 0.0 );
 
-	/*glColor3f( 0, 0, 1.0f );
+	glColor3f( 0, 0, 1.0f );
 	drawSphere( moleculeArray[0] );
 
 	glColor3f( 1.0f, 0, 0 );
 	drawSphere( moleculeArray[1] );*/
+
+	MassAggregateApplication::display();
 
 	glBegin( GL_LINES );
 	glColor3f( 0, 0, 1 );
@@ -179,7 +180,6 @@ void IceMelt::display() {
 		glVertex3f( p1.x, p1.y, p1.z );
 	}
 	glEnd();
-	glPopMatrix();
 }
 
 // draw sphere function
@@ -202,8 +202,8 @@ void IceMelt::key( unsigned char key )
 				if (spaceFlag_)
 					m.setAcceleration( cyclone::Vector3( 0, -1.0f, 0 ) );
 				else
-					//m.setAcceleration( cyclone::Vector3( 0, ((i % 2) * 0.1f), 0 ) );
-					m.setPosition( ICE_DIST * i, ICE_DIST * i, ICE_DIST * i );
+					m.setAcceleration( cyclone::Vector3( 0, ((i % 2) * 0.1f), 0 ) );
+					//m.setPosition( ICE_DIST * i, ICE_DIST * i, ICE_DIST * i );
 			}
 			spaceFlag_ = (spaceFlag_ ? false : true);
 			break;

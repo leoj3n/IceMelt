@@ -30,10 +30,10 @@
     <ClCompile Include="..\src\demos\IceMelt\IceMelt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\demos\IceMelt\app.cpp">
+    <ClCompile Include="..\src\demos\IceMelt\Bond.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\demos\IceMelt\Bond.cpp">
+    <ClCompile Include="..\src\demos\IceMelt\App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +44,10 @@
     <ClInclude Include="..\src\demos\IceMelt\Molecule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\demos\IceMelt\app.h">
+    <ClInclude Include="..\src\demos\IceMelt\Bond.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\demos\IceMelt\Bond.h">
+    <ClInclude Include="..\src\demos\IceMelt\App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
