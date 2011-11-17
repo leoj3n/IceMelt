@@ -102,9 +102,8 @@ void Spring::updateForce(RigidBody* body, real duration)
     Vector3 force = lws - ows;
 
     // Calculate the magnitude of the force
-    real magnitude = force.magnitude(); // @TODO: ask massimo if this is correct
-    //magnitude = real_abs(magnitude - restLength);
-	magnitude = magnitude - restLength;
+    real magnitude = force.magnitude();
+    magnitude = real_abs(magnitude - restLength);
     magnitude *= springConstant;
 
     // Calculate the final force and apply it
