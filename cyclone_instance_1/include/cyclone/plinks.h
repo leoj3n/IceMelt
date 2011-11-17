@@ -19,7 +19,7 @@
 #ifndef CYCLONE_PLINKS_H
 #define CYCLONE_PLINKS_H
 
-#include "pcontacts.h"
+#include <cyclone/pcontacts.h>
 
 namespace cyclone {
 

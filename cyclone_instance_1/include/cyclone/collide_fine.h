@@ -25,7 +25,7 @@
 #ifndef CYCLONE_COLLISION_FINE_H
 #define CYCLONE_COLLISION_FINE_H
 
-#include "contacts.h"
+#include <cyclone/contacts.h>
 
 namespace cyclone {
 

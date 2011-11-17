@@ -9,14 +9,14 @@
  * implies agreement with all terms and conditions of the accompanying
  * software licence.
  */
-#include "precision.h"
-#include "core.h"
-#include "random.h"
-#include "particle.h"
-#include "body.h"
-#include "pcontacts.h"
-#include "pworld.h"
-#include "collide_fine.h"
-#include "contacts.h"
-#include "fgen.h"
-#include "joints.h"
+#include <cyclone/precision.h>
+#include <cyclone/core.h>
+#include <cyclone/random.h>
+#include <cyclone/particle.h>
+#include <cyclone/body.h>
+#include <cyclone/pcontacts.h>
+#include <cyclone/pworld.h>
+#include <cyclone/collide_fine.h>
+#include <cyclone/contacts.h>
+#include <cyclone/fgen.h>
+#include <cyclone/joints.h>

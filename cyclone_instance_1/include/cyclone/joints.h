@@ -19,7 +19,7 @@
 #ifndef CYCLONE_JOINTS_H
 #define CYCLONE_JOINTS_H
 
-#include "contacts.h"
+#include <cyclone/contacts.h>
 
 namespace cyclone {
 

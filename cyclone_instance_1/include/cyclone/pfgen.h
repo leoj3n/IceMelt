@@ -18,8 +18,8 @@
 #ifndef CYCLONE_PFGEN_H
 #define CYCLONE_PFGEN_H
 
-#include "core.h"
-#include "particle.h"
+#include <cyclone/core.h>
+#include <cyclone/particle.h>
 #include <vector>
 
 namespace cyclone {

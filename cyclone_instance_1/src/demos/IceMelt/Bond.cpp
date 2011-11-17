@@ -1,5 +1,7 @@
 #include "IceMelt.h"
 
+// Methods:
+
 void Bond::update( cyclone::real duration ) {
 	 // checks the molecules to see if this link should be destroyed
 }

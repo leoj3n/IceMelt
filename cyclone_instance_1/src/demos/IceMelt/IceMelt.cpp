@@ -14,17 +14,13 @@
 
 #include "IceMelt.h" // includes all other .h files
 
+#define RECORD_AT_START false
+#define FORCED_AT_START false
+#define FORCED_DURATION 0.016f
+
 #define BASE_MASS 1
 #define ICE_DIST 0.5f
 #define ICE_CROSS_DIST sqrt( 2.0f ) * ICE_DIST
-
-// DEFAULT CONSTRUCTOR
-IceMelt::IceMelt() 
-:
-cubeDepth_( 0 ),
-bondCount_( 0 ),
-moleculeCount_( 0 ),
-world_( 0 ) {}
 
 // CONSTRUCTOR
 IceMelt::IceMelt( const unsigned depth ) 
@@ -35,19 +31,25 @@ bondCount_( 2 * cubeDepth_ * cubeDepth_ * (cubeDepth_ - 1)
 			+ 3 * cubeDepth_ * (cubeDepth_ - 1) * (cubeDepth_ - 1) ),
 moleculeCount_( depth * depth * depth ),
 world_( (depth * depth * depth) * 10 ) {
+	// initialize non-const variables
 	molecules_ = new Molecule[moleculeCount_];
-    for( unsigned i = 0; i < moleculeCount_; i++ ) {
-        world_.getParticles().push_back( molecules_ + i );
-    }
-    groundContactGenerator_.init( &world_.getParticles() );
-    world_.getContactGenerators().push_back( &groundContactGenerator_ );
-
-	//moleculesOrig_ = molecules_; // needs assingment operator and copy constructor
+	moleculesOrig_ = new Molecule[moleculeCount_];
 	bonds_ = new Bond[bondCount_];
 	spaceFlag_ = false;
+	zeroFlag_ = FORCED_AT_START;
+	recording_ = RECORD_AT_START;
+	forcedDuration_ = FORCED_DURATION;
+
+	SHGetSpecialFolderPath( 0, path_, CSIDL_DESKTOPDIRECTORY, false ); // set path_ to desktop path
+	sprintf_s( path_, "%s\\IceMelt_Render", path_ ); // add to path_
 
 	const unsigned SHEET = cubeDepth_ * cubeDepth_; // @TODO add comments about this variable name
 	const unsigned c = cubeDepth_ - 1;
+
+	// add molecules to world
+	for (unsigned i = 0; i < moleculeCount_; i++) world_.getParticles().push_back( molecules_ + i );
+	groundContactGenerator_.init( &world_.getParticles() );
+	world_.getContactGenerators().push_back( &groundContactGenerator_ );
 
 	int count = 0;
 	for( unsigned i = 0; i < cubeDepth_; i++ ) {
@@ -62,6 +64,9 @@ world_( (depth * depth * depth) * 10 ) {
 			}
 		}
 	}
+
+	for (unsigned i = 0; i < moleculeCount_; i++)
+		moleculesOrig_[i] = molecules_[i]; // store original state
 
 	count = 0;
 	unsigned rodNumber = 0;
@@ -147,29 +152,45 @@ world_( (depth * depth * depth) * 10 ) {
 // DESTRUCTOR
 IceMelt::~IceMelt() {
     if (bonds_) delete[] bonds_;
-	delete[] molecules_;
+	if (molecules_) delete[] molecules_;
+}
+
+// graphics initialization
+void IceMelt::initGraphics() {
+	glutReshapeWindow( 600, 800 ); // window size
+	glutPositionWindow( 20, 20 ); // window position
+	
+	glClearColor(0.9f, 0.95f, 1.0f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
+    glShadeModel(GL_SMOOTH);
+
+    setView();
 }
 
 // UPDATE
 void IceMelt::update() {
-	// Clear accumulators
-    world_.startFrame();
-    // Find the duration of the last frame in seconds
-    float duration = (float)TimingData::get().lastFrameDuration * 0.001f;
-    if (duration <= 0.0f) return;
-    // Run the simulation
-    world_.runPhysics( duration );
-    Application::update();
+    world_.startFrame(); // clear accumulators
+    
+	duration_ = (float)TimingData::get().lastFrameDuration * 0.001f; // duration of the last frame in seconds
+    if (duration_ <= 0.0f) return; // duration can't be negative
 
-	// update molecules
-	for( unsigned i = 0; i < moleculeCount_; i++ ) {
-		molecules_[i].update( duration );
+	if (zeroFlag_)
+		duration_ = forcedDuration_; // override actual duration
+
+	if( recording_ ) {
+		sprintf_s( file_, "%s\\%d", path_, recID_ ); // set output directory (overwrites garbage)
+		SHCreateDirectoryEx( 0, file_, NULL ); // create file_ directory if not already existing
+		sprintf_s( file_, "%s\\frame%d.png", file_, (int)TimingData::get().frameNumber ); // set output filename based on frame
 	}
+
+    world_.runPhysics( duration_ ); // run the simulation
+    Application::update();
+	
+	// update molecules
+	for (unsigned i = 0; i < moleculeCount_; i++) molecules_[i].update( duration_ );
 
 	// update bonds
-	for( unsigned i = 0; i < bondCount_; i++ ) {
-		bonds_[i].update( duration );
-	}
+	for (unsigned i = 0; i < bondCount_; i++) bonds_[i].update( duration_ );
 }
 
 // DRAW
@@ -177,13 +198,36 @@ void IceMelt::display() {
 	// Clear the view port and set the camera direction
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
-    gluLookAt( 0.0, 3.5, 8.0,  0.0, 3.5, 0.0,  0.0, 1.0, 0.0 );
+    gluLookAt( 5.0, 2.0, 8.0,  0.5, 2.0, 0.0,  0.0, 1.0, 0.0 );
 
 	// draw the molecules
 	for (unsigned i = 0; i < moleculeCount_; i++) molecules_[i].draw();
 
 	// draw the bonds
 	for (unsigned i = 0; i < bondCount_; i++) bonds_[i].draw();
+
+	// this HUD will be captured in screenshots
+	char hud_top[50];
+	sprintf_s( hud_top, "Delta Time:  %f [%s]", duration_, (zeroFlag_ ? "FORCED" : "NORMAL") );
+	glColor3f( 0, 0, 0 );
+	renderText( 10.0f, (height - 20.0f), hud_top );
+
+	if( recording_ ) {
+		BYTE* pixels = new BYTE[4 * width * height]; // make the BYTE array, factor of $ because it's RBGA
+		glReadPixels( 0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels ); // read screen pixels from the frame buffer into pixels_
+		FIBITMAP* image = FreeImage_ConvertFromRawBits( pixels, width, height, 4 * width, 32, 
+														FI_RGBA_RED_MASK, FI_RGBA_GREEN_MASK, FI_RGBA_BLUE_MASK, false ); // convert
+		delete pixels;
+
+		FreeImage_Save( FIF_PNG, image, file_, 0 ); // save image_ to file_
+		FreeImage_Unload( image );
+
+		// this HUD won't be captured in screenshots
+		char hud_bot[MAX_PATH + 50];
+		sprintf_s( hud_bot, "File:  %s", file_ );
+		glColor3f( 0, 0, 1.0f );
+		renderText( 10.0f, 20.0f, hud_bot );
+	}
 }
 
 // detect key press
@@ -200,15 +244,41 @@ void IceMelt::key( unsigned char key ) {
 			}
 			spaceFlag_ = (spaceFlag_ ? false : true);
 			break;
+		case '1': // #1: reset
+			for (unsigned i = 0; i < moleculeCount_; i++) molecules_[i] = moleculesOrig_[i]; // restore original state
+				spaceFlag_ = false; // spacebar effect gets removed
+			break;
+		case '2': // #2: record
+			recID_ = TimingData::getTime(); // set unique recording ID
+			recording_ = (recording_ ? false : true);
+			glutSetWindowTitle( getTitle() ); // update window title
+			break;
+		case '0': // 0: override duration
+			zeroFlag_ = (zeroFlag_ ? false : true);
+			break;
+		case '=': // =: increment duration
+			forcedDuration_ += 0.001f;
+			break;
+		case '-': // -: decrement duration
+			if (forcedDuration_ > 0.001f)
+				forcedDuration_ -= 0.001f;
+			else
+				forcedDuration_ -= 0.0001f; // decrement slower
+
+			if (forcedDuration_ <= 0.0f) forcedDuration_ = 0.0001f; // avoid zero duration
+			break;
     }
 }
 
 // returns program title
 const char* IceMelt::getTitle() {
-	return "Cyclone > Ice Melt";
+	if (recording_)
+		return "[RECORDING] Cyclone > Ice Melt";
+	else
+		return "Cyclone > Ice Melt";
 }
 
 // create an application object
 Application* getApplication() {
-	return new IceMelt( 3 ); // depth gets passed as an unsigned int
+	return new IceMelt( 6 ); // depth gets passed as an unsigned int
 }

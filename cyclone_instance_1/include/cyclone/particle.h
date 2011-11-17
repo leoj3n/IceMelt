@@ -20,7 +20,7 @@
 #ifndef CYCLONE_PARTICLE_H
 #define CYCLONE_PARTICLE_H
 
-#include "core.h"
+#include <cyclone/core.h>
 
 namespace cyclone {
 

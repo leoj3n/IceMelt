@@ -9,17 +9,22 @@ class Molecule : public cyclone::Particle
 	unsigned state_;
 
 public:
-	Molecule() : temp_( 0 ), state_( 0 ) {}; // default constructor
+	// Constructors:
+
+	Molecule() : temp_( 0 ), state_( 0 ) {} // default constructor
+	Molecule( const Molecule& source ); // copy constructor
+	Molecule& operator=( Molecule& source ); // assignment operator
+	~Molecule() {} // destructor
+
+	// Methods:
 
 	void update( cyclone::real duration );
-
 	void draw();
 
 	// Accessors:
 
 	cyclone::real getTemp();
 	const cyclone::real getTemp() const;
-
 	unsigned getState();
 	const unsigned getState() const;
 
@@ -27,17 +32,6 @@ public:
 
 	void setTemp( cyclone::real t );
 	void setState( unsigned s );
-
-	// Operators:
-
-	Molecule& operator=(const Molecule &source) {
-		if (this != &source) { // if not self
-			temp_ = source.getTemp();
-			state_ = source.getState();
-		}
-
-		return *this;
-	}
 };
 
 #endif

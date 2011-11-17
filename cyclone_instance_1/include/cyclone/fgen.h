@@ -18,8 +18,8 @@
 #ifndef CYCLONE_FGEN_H
 #define CYCLONE_FGEN_H
 
-#include "body.h"
-#include "pfgen.h"
+#include <cyclone/body.h>
+#include <cyclone/pfgen.h>
 #include <vector>
 
 namespace cyclone {

@@ -19,8 +19,8 @@
 #ifndef CYCLONE_WORLD_H
 #define CYCLONE_WORLD_H
 
-#include "body.h"
-#include "contacts.h"
+#include <cyclone/body.h>
+#include <cyclone/contacts.h>
 
 namespace cyclone {
     /**

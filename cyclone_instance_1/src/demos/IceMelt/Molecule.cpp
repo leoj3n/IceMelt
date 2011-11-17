@@ -1,5 +1,33 @@
 #include "IceMelt.h"
 
+// Constructors:
+
+// copy constructor
+Molecule::Molecule( const Molecule &source ) {
+	temp_ = source.temp_;
+	state_ = source.state_;
+	inverseMass = source.inverseMass;
+	damping = source.damping;
+	position = source.position;
+	velocity = source.velocity;
+	acceleration = source.acceleration;
+}
+
+// assignment operator
+Molecule& Molecule::operator=( Molecule& source ) {
+	if( this != &source ) {
+		temp_ = source.temp_;
+		state_ = source.state_;
+		inverseMass = source.inverseMass;
+		damping = source.damping;
+		position = source.position;
+		velocity = source.velocity;
+		acceleration = source.acceleration;
+		this->clearAccumulator();
+	}
+	return *this;
+}
+
 void Molecule::update( cyclone::real duration ) {
 	temp_ += duration / 10; // temporary hack for testing color
 	if (temp_ >= 1) state_ = 1;
@@ -21,6 +49,7 @@ void Molecule::draw() {
 cyclone::real Molecule::getTemp() {
 	return temp_;
 }
+
 const cyclone::real Molecule::getTemp() const {
 	return temp_;
 }
@@ -28,6 +57,7 @@ const cyclone::real Molecule::getTemp() const {
 unsigned Molecule::getState() {
 	return state_;
 }
+
 const unsigned Molecule::getState() const {
 	return state_;
 }

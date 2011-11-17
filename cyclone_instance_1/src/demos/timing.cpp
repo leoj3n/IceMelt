@@ -20,17 +20,16 @@
 #include <sys/time.h>
 #define LONGLONG long long int
 LONGLONG timeGetTime() {
-  /*
     struct timeval t;
     LONGLONG seconds, useconds;    
     gettimeofday(&t, NULL);
     seconds  = t.tv_sec;
     useconds = t.tv_usec;
     return seconds+(int)useconds/1000;
-  */
   return clock()*1000.0/CLOCKS_PER_SEC;
 }
 #endif
+
 
 // Hold internal timing data for the performance counter.
 static bool qpcFlag;

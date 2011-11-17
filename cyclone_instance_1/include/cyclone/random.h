@@ -18,7 +18,7 @@
 #ifndef CYCLONE_RANDOM_H
 #define CYCLONE_RANDOM_H
 
-#include "core.h"
+#include <cyclone/core.h>
 
 namespace cyclone {
 

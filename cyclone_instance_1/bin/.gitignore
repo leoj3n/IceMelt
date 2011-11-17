@@ -2,3 +2,4 @@
 !.gitignore
 !glut.dll
 !glut32.dll
+!FreeImage.dll

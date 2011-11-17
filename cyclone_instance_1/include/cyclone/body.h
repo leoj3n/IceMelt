@@ -19,7 +19,7 @@
 #ifndef CYCLONE_BODY_H
 #define CYCLONE_BODY_H
 
-#include "core.h"
+#include <cyclone/core.h>
 
 namespace cyclone {
 

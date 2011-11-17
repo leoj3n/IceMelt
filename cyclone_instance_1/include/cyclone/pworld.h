@@ -19,8 +19,8 @@
 #ifndef CYCLONE_PWORLD_H
 #define CYCLONE_PWORLD_H
 
-#include "pfgen.h"
-#include "plinks.h"
+#include <cyclone/pfgen.h>
+#include <cyclone/plinks.h>
 
 namespace cyclone {
 
