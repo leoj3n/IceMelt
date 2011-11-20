@@ -26,11 +26,11 @@ Bond& Bond::operator=( Bond& source ) {
 // Methods:
 
 void Bond::update( cyclone::real duration ) {
-	// checks to see if this link should be destroyed
-	if (temp_ > 0.8f) state_ = 0; // temporary if-statement to test destruction
-
 	// average the temperatures of the bonded molecules to get bond temperature
 	temp_ = (particle[0]->getTemp() + particle[0]->getTemp()) / 2;
+
+	// checks to see if this link should be destroyed
+	if (temp_ > 0.8f) state_ = 0; // temporary if-statement to test destruction
 }
 
 void Bond::draw() {
@@ -38,7 +38,7 @@ void Bond::draw() {
 	const cyclone::Vector3 &p1 = particle[1]->getPosition();
 
 	glBegin( GL_LINES );
-	glColor3f( 0, 0, temp_ ); // gets more blue depending on temperature of connected molecules
+	glColor3f( temp_, 0, 0 ); // gets more red depending on temperature of connected molecules
 	glVertex3f( p0.x, p0.y, p0.z );
 	glVertex3f( p1.x, p1.y, p1.z );
 	glEnd();

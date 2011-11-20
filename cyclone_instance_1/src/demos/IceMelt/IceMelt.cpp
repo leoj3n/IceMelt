@@ -6,7 +6,7 @@
  *---																	---*
  *---	----	----	----	----	----	----	----	----	---*
  *---																	---*
- *---	Version 2.1								2011 November 19		---*
+ *---	Version 2.2								2011 November 20		---*
  *---																	---*
  *---	Joel Kuczmarski			Dan Wojo		Derek Hearn				---*
  *---																	---*
@@ -190,19 +190,17 @@ void IceMelt::update() {
 		sprintf_s( file_, "%s\\frame%d.png", file_, (int)TimingData::get().frameNumber ); // set output filename based on frame
 	}
 
-	// remove Bond contact generators that have a state of 0
+	// add and remove contact generators as needed
+	cyclone::ParticleWorld<Molecule>::ContactGenerators* cgs = &world_.getContactGenerators();
+	cyclone::ParticleWorld<Molecule>::ContactGenerators::iterator g;
 	for( unsigned i = 0; i < bondCount_; i++ ) {
-		if( !bonds_[i].getState() ) {
-			if( !world_.getContactGenerators().empty() ) {
-				for( cyclone::ParticleWorld<Molecule>::ContactGenerators::iterator g = world_.getContactGenerators().begin();
-					g != world_.getContactGenerators().end(); ) { // don't auto-increment
-					if( (*g) == &bonds_[i] ) {
-						g = world_.getContactGenerators().erase( g ); // sets iterator to the object after erased
-					} else {
-						g++; // increment here
-					}
-				}
-			}
+		g = std::find( cgs->begin(), cgs->end(), &bonds_[i] );
+		if( g == cgs->end() ) { // isn't in cgs
+			if (bonds_[i].getState()) // has state of 1
+				cgs->push_back( &bonds_[i] ); // add Bond contact generator to vector of contact generators
+		} else { // is in cgs
+			if (!bonds_[i].getState()) // has state of 0
+				cgs->erase( g ); // remove Bond contact generator from vector of contact generators
 		}
 	}
 	
@@ -298,6 +296,13 @@ void IceMelt::key( unsigned char key ) {
 				forcedDuration_ -= 0.0001f; // decrement slower
 
 			if (forcedDuration_ <= 0.0f) forcedDuration_ = 0.0001f; // avoid zero duration
+			break;
+		case '5': // 5: tests reinstantiation of Bond between two Molecules
+			unsigned i = 9;
+			bonds_[i].particle[0]->setTemp( 0 ); // reset temperature of first molecule
+			bonds_[i].particle[1]->setTemp( 0.5f ); // set temperature of second molecule
+			bonds_[i].setState( 1 ); // reset state of rod
+			bonds_[i].setTemp( 0 ); // reset temperature of rod
 			break;
     }
 }

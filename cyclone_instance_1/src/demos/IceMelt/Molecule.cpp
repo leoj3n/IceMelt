@@ -29,7 +29,7 @@ Molecule& Molecule::operator=( Molecule& source ) {
 }
 
 void Molecule::update( cyclone::real duration ) {
-	temp_ += duration / 5; // temporary hack for testing color
+	temp_ += duration / (rand() % 50 + 1); // temporary hack for testing color
 	if (temp_ >= 1) state_ = 1;
 }
 

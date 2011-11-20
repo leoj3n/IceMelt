@@ -9,6 +9,7 @@
 
 #include "cyclone/app.h"
 #include "../timing.h"
+#include <algorithm> // for use in vector find
 
 #include "cyclone/plinks.h" // uses templates
 #include "cyclone/pworld.h" // uses templates
