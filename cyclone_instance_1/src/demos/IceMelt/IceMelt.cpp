@@ -299,6 +299,9 @@ void IceMelt::key( unsigned char key ) {
 			break;
 		case '5': // 5: tests reinstantiation of Bond between two Molecules
 			unsigned i = 9;
+			// set this Bond's first particle to a random particle
+			bonds_[i].particle[0] = &molecules_[rand() % moleculeCount_];
+			// reset the Bond
 			bonds_[i].particle[0]->setTemp( 0 ); // reset temperature of first molecule
 			bonds_[i].particle[1]->setTemp( 0.5f ); // set temperature of second molecule
 			bonds_[i].setState( 1 ); // reset state of rod
