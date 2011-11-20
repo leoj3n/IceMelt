@@ -92,19 +92,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\demos\app.cpp" />
     <ClCompile Include="..\src\demos\IceMelt\Bond.cpp" />
+    <ClCompile Include="..\src\demos\IceMelt\cyclone\app.cpp" />
+    <ClCompile Include="..\src\demos\IceMelt\cyclone\main.cpp" />
     <ClCompile Include="..\src\demos\IceMelt\IceMelt.cpp" />
     <ClCompile Include="..\src\demos\IceMelt\Molecule.cpp" />
-    <ClCompile Include="..\src\demos\main.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)%(Filename)1.obj</ObjectFileName>
-    </ClCompile>
     <ClCompile Include="..\src\demos\timing.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\demos\app.h" />
     <ClInclude Include="..\src\demos\IceMelt\Bond.h" />
+    <ClInclude Include="..\src\demos\IceMelt\cyclone\app.h" />
+    <ClInclude Include="..\src\demos\IceMelt\cyclone\cyclone.h" />
+    <ClInclude Include="..\src\demos\IceMelt\cyclone\plinks.h" />
+    <ClInclude Include="..\src\demos\IceMelt\cyclone\pworld.h" />
     <ClInclude Include="..\src\demos\IceMelt\FreeImage\FreeImage.h" />
     <ClInclude Include="..\src\demos\IceMelt\IceMelt.h" />
     <ClInclude Include="..\src\demos\IceMelt\Molecule.h" />

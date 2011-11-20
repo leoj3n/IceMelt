@@ -6,7 +6,7 @@
  *---																	---*
  *---	----	----	----	----	----	----	----	----	---*
  *---																	---*
- *---	Version 1.0								2011 November 15		---*
+ *---	Version 2.1								2011 November 19		---*
  *---																	---*
  *---	Joel Kuczmarski			Dan Wojo		Derek Hearn				---*
  *---																	---*
@@ -19,7 +19,7 @@
 #define FORCED_DURATION 0.016f
 
 #define BASE_MASS 1
-#define ICE_DIST 0.5f
+#define ICE_DIST 0.8f
 #define ICE_CROSS_DIST sqrt( 2.0f ) * ICE_DIST
 
 // CONSTRUCTOR
@@ -27,14 +27,15 @@ IceMelt::IceMelt( const unsigned depth )
 :
 cubeDepth_( depth ),
 bondCount_( 2 * cubeDepth_ * cubeDepth_ * (cubeDepth_ - 1) 
-			+ cubeDepth_ * cubeDepth_ * (cubeDepth_ - 1) 
-			+ 3 * cubeDepth_ * (cubeDepth_ - 1) * (cubeDepth_ - 1) ),
+		+ cubeDepth_ * cubeDepth_ * (cubeDepth_ - 1) 
+		+ 3 * cubeDepth_ * (cubeDepth_ - 1) * (cubeDepth_ - 1) ),
 moleculeCount_( depth * depth * depth ),
 world_( (depth * depth * depth) * 10 ) {
 	// initialize non-const variables
 	molecules_ = new Molecule[moleculeCount_];
 	moleculesOrig_ = new Molecule[moleculeCount_];
 	bonds_ = new Bond[bondCount_];
+	bondsOrig_ = new Bond[bondCount_];
 	spaceFlag_ = false;
 	zeroFlag_ = FORCED_AT_START;
 	recording_ = RECORD_AT_START;
@@ -59,7 +60,7 @@ world_( (depth * depth * depth) * 10 ) {
 				molecules_[count].setMass( BASE_MASS );
 				molecules_[count].setVelocity( 0, 0, 0 );
 				molecules_[count].setDamping( 0.9f );
-				molecules_[count].setAcceleration( cyclone::Vector3::GRAVITY );
+				molecules_[count].setAcceleration( cyclone::Vector3( 0, -1.0f, 0 ) ); //cyclone::Vector3::GRAVITY
 				molecules_[count++].clearAccumulator();
 			}
 		}
@@ -145,14 +146,20 @@ world_( (depth * depth * depth) * 10 ) {
 	}
 
 	for( unsigned i = 0; i < bondCount_; i++ ) {
+		bondsOrig_[i] = bonds_[i]; // store original state
+		// below: pushes back a Bond which is a ParticleRod which is a ParticleLink which is a ParticleContactGenerator
         world_.getContactGenerators().push_back( &bonds_[i] );
     }
+
+	origContactGenerators_ = world_.getContactGenerators(); // store original state
 }
 
 // DESTRUCTOR
 IceMelt::~IceMelt() {
     if (bonds_) delete[] bonds_;
+	if (bondsOrig_) delete[] bondsOrig_;
 	if (molecules_) delete[] molecules_;
+	if (moleculesOrig_) delete[] moleculesOrig_;
 }
 
 // graphics initialization
@@ -183,14 +190,32 @@ void IceMelt::update() {
 		sprintf_s( file_, "%s\\frame%d.png", file_, (int)TimingData::get().frameNumber ); // set output filename based on frame
 	}
 
+	// remove Bond contact generators that have a state of 0
+	for( unsigned i = 0; i < bondCount_; i++ ) {
+		if( !bonds_[i].getState() ) {
+			if( !world_.getContactGenerators().empty() ) {
+				for( cyclone::ParticleWorld<Molecule>::ContactGenerators::iterator g = world_.getContactGenerators().begin();
+					g != world_.getContactGenerators().end(); ) { // don't auto-increment
+					if( (*g) == &bonds_[i] ) {
+						g = world_.getContactGenerators().erase( g ); // sets iterator to the object after erased
+					} else {
+						g++; // increment here
+					}
+				}
+			}
+		}
+	}
+	
     world_.runPhysics( duration_ ); // run the simulation
     Application::update();
 	
 	// update molecules
-	for (unsigned i = 0; i < moleculeCount_; i++) molecules_[i].update( duration_ );
+	for (unsigned i = 0; i < moleculeCount_; i++)
+		if (molecules_[i].getState()) molecules_[i].update( duration_ );
 
 	// update bonds
-	for (unsigned i = 0; i < bondCount_; i++) bonds_[i].update( duration_ );
+	for (unsigned i = 0; i < bondCount_; i++)
+		if (bonds_[i].getState()) bonds_[i].update( duration_ );
 }
 
 // DRAW
@@ -201,10 +226,12 @@ void IceMelt::display() {
     gluLookAt( 5.0, 2.0, 8.0,  0.5, 2.0, 0.0,  0.0, 1.0, 0.0 );
 
 	// draw the molecules
-	for (unsigned i = 0; i < moleculeCount_; i++) molecules_[i].draw();
+	for (unsigned i = 0; i < moleculeCount_; i++)
+		if (molecules_[i].getState()) molecules_[i].draw();
 
 	// draw the bonds
-	for (unsigned i = 0; i < bondCount_; i++) bonds_[i].draw();
+	for (unsigned i = 0; i < bondCount_; i++)
+		if (bonds_[i].getState()) bonds_[i].draw();
 
 	// this HUD will be captured in screenshots
 	char hud_top[50];
@@ -245,13 +272,18 @@ void IceMelt::key( unsigned char key ) {
 			spaceFlag_ = (spaceFlag_ ? false : true);
 			break;
 		case '1': // #1: reset
-			for (unsigned i = 0; i < moleculeCount_; i++) molecules_[i] = moleculesOrig_[i]; // restore original state
 				spaceFlag_ = false; // spacebar effect gets removed
+				for (unsigned i = 0; i < moleculeCount_; i++) molecules_[i] = moleculesOrig_[i]; // restore original state
+				for (unsigned i = 0; i < bondCount_; i++) bonds_[i] = bondsOrig_[i]; // restore original state
+				world_.getContactGenerators().assign( origContactGenerators_.begin(), origContactGenerators_.end() ); // restore original state
 			break;
 		case '2': // #2: record
 			recID_ = TimingData::getTime(); // set unique recording ID
 			recording_ = (recording_ ? false : true);
 			glutSetWindowTitle( getTitle() ); // update window title
+			break;
+		case '9': // 0: reset forced duration
+			forcedDuration_ = FORCED_DURATION;
 			break;
 		case '0': // 0: override duration
 			zeroFlag_ = (zeroFlag_ ? false : true);
@@ -280,5 +312,5 @@ const char* IceMelt::getTitle() {
 
 // create an application object
 Application* getApplication() {
-	return new IceMelt( 6 ); // depth gets passed as an unsigned int
+	return new IceMelt( 4 ); // depth gets passed as an unsigned int
 }

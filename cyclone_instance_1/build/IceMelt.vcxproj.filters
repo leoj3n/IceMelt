@@ -16,15 +16,15 @@
     <Filter Include="Common Files">
       <UniqueIdentifier>{d34475ae-aec3-4ad8-b21c-73f6a1696845}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\cyclone">
+      <UniqueIdentifier>{49b4e820-1448-4acc-854c-1a587990fef2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cyclone">
+      <UniqueIdentifier>{bd4d716c-217b-4541-a5cb-518e81cbb297}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\demos\main.cpp">
-      <Filter>Common Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\demos\timing.cpp">
-      <Filter>Common Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\demos\app.cpp">
       <Filter>Common Files</Filter>
     </ClCompile>
     <ClCompile Include="..\src\demos\IceMelt\Bond.cpp">
@@ -36,12 +36,15 @@
     <ClCompile Include="..\src\demos\IceMelt\Molecule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\demos\IceMelt\cyclone\app.cpp">
+      <Filter>Source Files\cyclone</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\demos\IceMelt\cyclone\main.cpp">
+      <Filter>Source Files\cyclone</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\demos\timing.h">
-      <Filter>Common Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\demos\app.h">
       <Filter>Common Files</Filter>
     </ClInclude>
     <ClInclude Include="..\src\demos\IceMelt\Bond.h">
@@ -55,6 +58,18 @@
     </ClInclude>
     <ClInclude Include="..\src\demos\IceMelt\FreeImage\FreeImage.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\demos\IceMelt\cyclone\plinks.h">
+      <Filter>Header Files\cyclone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\demos\IceMelt\cyclone\pworld.h">
+      <Filter>Header Files\cyclone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\demos\IceMelt\cyclone\app.h">
+      <Filter>Header Files\cyclone</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\demos\IceMelt\cyclone\cyclone.h">
+      <Filter>Header Files\cyclone</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

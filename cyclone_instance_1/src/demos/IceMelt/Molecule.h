@@ -11,7 +11,7 @@ class Molecule : public cyclone::Particle
 public:
 	// Constructors:
 
-	Molecule() : temp_( 0 ), state_( 0 ) {} // default constructor
+	Molecule() : temp_( 0 ), state_( 1 ) {} // default constructor
 	Molecule( const Molecule& source ); // copy constructor
 	Molecule& operator=( Molecule& source ); // assignment operator
 	~Molecule() {} // destructor
@@ -23,9 +23,7 @@ public:
 
 	// Accessors:
 
-	cyclone::real getTemp();
 	const cyclone::real getTemp() const;
-	unsigned getState();
 	const unsigned getState() const;
 
 	// Muatators:

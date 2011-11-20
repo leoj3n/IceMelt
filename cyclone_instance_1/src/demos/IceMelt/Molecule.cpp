@@ -29,7 +29,7 @@ Molecule& Molecule::operator=( Molecule& source ) {
 }
 
 void Molecule::update( cyclone::real duration ) {
-	temp_ += duration / 10; // temporary hack for testing color
+	temp_ += duration / 5; // temporary hack for testing color
 	if (temp_ >= 1) state_ = 1;
 }
 
@@ -46,16 +46,8 @@ void Molecule::draw() {
 
 // Accessors:
 
-cyclone::real Molecule::getTemp() {
-	return temp_;
-}
-
 const cyclone::real Molecule::getTemp() const {
 	return temp_;
-}
-
-unsigned Molecule::getState() {
-	return state_;
 }
 
 const unsigned Molecule::getState() const {

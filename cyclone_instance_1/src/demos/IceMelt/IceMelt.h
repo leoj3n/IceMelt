@@ -7,8 +7,11 @@
 	#include <GLUT/glut.h>
 #endif
 
-#include "../app.h"
+#include "cyclone/app.h"
 #include "../timing.h"
+
+#include "cyclone/plinks.h" // uses templates
+#include "cyclone/pworld.h" // uses templates
 
 #include "Molecule.h" // extends Particle
 #include "Bond.h" // extends Rod
@@ -19,17 +22,21 @@
 
 class IceMelt : public Application
 {
-	cyclone::ParticleWorld world_;
-	cyclone::GroundContacts groundContactGenerator_;
-    Molecule* molecules_;
+	cyclone::ParticleWorld<Molecule> world_;
+	cyclone::GroundContacts<Molecule> groundContactGenerator_;
+	Molecule* molecules_;
 	Bond* bonds_;
 
-	const unsigned cubeDepth_;		//--> may need to make non-const for melting
-	const unsigned bondCount_;		//--> may need to make non-const for melting
-	const unsigned moleculeCount_;	//--> may need to make non-const for melting
+	const unsigned cubeDepth_; // only used in constructor
+	// bonds and molecules don't get deleted,
+	// instead they have their state set to 0 so they can be reused later.
+	const unsigned bondCount_;
+	const unsigned moleculeCount_;
 
 	// variables used for reseting the cube
+	cyclone::ParticleWorld<Molecule>::ContactGenerators origContactGenerators_;
 	Molecule* moleculesOrig_;
+	Bond* bondsOrig_;
 	bool spaceFlag_;
 
 	// variables for changing duration
