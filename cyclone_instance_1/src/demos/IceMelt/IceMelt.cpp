@@ -6,7 +6,7 @@
  *---																	---*
  *---	----	----	----	----	----	----	----	----	---*
  *---																	---*
- *---	Version 2.2								2011 November 20		---*
+ *---	Version 2.2								2011 November 22		---*
  *---																	---*
  *---	Joel Kuczmarski			Dan Wojo		Derek Hearn				---*
  *---																	---*
@@ -19,8 +19,9 @@
 #define FORCED_DURATION 0.016f
 
 #define BASE_MASS 1
-#define ICE_DIST 0.8f
+#define ICE_DIST 0.2f
 #define ICE_CROSS_DIST sqrt( 2.0f ) * ICE_DIST
+#define MOLECULE_DRAW_SIZE 0.08f
 
 // CONSTRUCTOR
 IceMelt::IceMelt( const unsigned depth ) 
@@ -44,7 +45,7 @@ world_( (depth * depth * depth) * 10 ) {
 	SHGetSpecialFolderPath( 0, path_, CSIDL_DESKTOPDIRECTORY, false ); // set path_ to desktop path
 	sprintf_s( path_, "%s\\IceMelt_Render", path_ ); // add to path_
 
-	const unsigned SHEET = cubeDepth_ * cubeDepth_; // @TODO add comments about this variable name
+	const unsigned slice = cubeDepth_ * cubeDepth_; // horizontal slice
 	const unsigned c = cubeDepth_ - 1;
 
 	// add molecules to world
@@ -56,6 +57,7 @@ world_( (depth * depth * depth) * 10 ) {
 	for( unsigned i = 0; i < cubeDepth_; i++ ) {
 		for( unsigned j = 0; j < cubeDepth_; j++ ) {
 			for( unsigned k = 0; k < cubeDepth_; k++ ) {
+				molecules_[count].setSize( MOLECULE_DRAW_SIZE );
 				molecules_[count].setPosition( ICE_DIST * k, ICE_DIST * i, ICE_DIST * j );
 				molecules_[count].setMass( BASE_MASS );
 				molecules_[count].setVelocity( 0, 0, 0 );
@@ -113,9 +115,9 @@ world_( (depth * depth * depth) * 10 ) {
 
 		if( i != cubeDepth_ - 1 ) {
 			p = 0;
-			q = SHEET;
+			q = slice;
 
-			for( unsigned j = 0; j < SHEET; j++ ) {
+			for( unsigned j = 0; j < slice; j++ ) {
 				bonds_[rodNumber].particle[0] = &molecules_[count+p];
 				bonds_[rodNumber].particle[1] = &molecules_[count-q];
 				bonds_[rodNumber].length = ICE_DIST;
@@ -125,11 +127,11 @@ world_( (depth * depth * depth) * 10 ) {
 				q--;
 			}
 
-			for( unsigned j = 0; j < SHEET; j++ ) { // crossing the fronts, not last in row
+			for( unsigned j = 0; j < slice; j++ ) { // crossing the fronts, not last in row
                 if( j % cubeDepth_ ) {
                     // forward cross
                     bonds_[rodNumber].particle[0] = &molecules_[count-1-j];
-                    bonds_[rodNumber].particle[1] = &molecules_[count-j+SHEET];
+                    bonds_[rodNumber].particle[1] = &molecules_[count-j+slice];
                     bonds_[rodNumber].length = ICE_CROSS_DIST;
                     rodNumber++;
                 }
@@ -137,7 +139,7 @@ world_( (depth * depth * depth) * 10 ) {
                 // crossing the sides
                 if( (j / cubeDepth_) > 0 ) {
                     bonds_[rodNumber].particle[0] = &molecules_[count-1-j];
-                    bonds_[rodNumber].particle[1] = &molecules_[count-1-j+SHEET+cubeDepth_];
+                    bonds_[rodNumber].particle[1] = &molecules_[count-1-j+slice+cubeDepth_];
                     bonds_[rodNumber].length = ICE_CROSS_DIST;
                     rodNumber++;
                 }
@@ -320,5 +322,5 @@ const char* IceMelt::getTitle() {
 
 // create an application object
 Application* getApplication() {
-	return new IceMelt( 4 ); // depth gets passed as an unsigned int
+	return new IceMelt( 6 ); // depth gets passed as an unsigned int
 }

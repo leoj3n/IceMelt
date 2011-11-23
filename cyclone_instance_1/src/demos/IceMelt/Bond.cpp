@@ -27,10 +27,15 @@ Bond& Bond::operator=( Bond& source ) {
 
 void Bond::update( cyclone::real duration ) {
 	// average the temperatures of the bonded molecules to get bond temperature
-	temp_ = (particle[0]->getTemp() + particle[0]->getTemp()) / 2;
+	temp_ = (particle[0]->getTemp() + particle[1]->getTemp()) / 2;
+
+	if (particle[1]->getPosition().y > particle[0]->getPosition().y) // particle[1] on top
+		particle[1]->setTemp( particle[1]->getTemp() + (temp_ * 0.005f) );
+	else // particle[0] on top
+		particle[0]->setTemp( particle[0]->getTemp() + (temp_ * 0.005f) );
 
 	// checks to see if this link should be destroyed
-	if (temp_ > 0.8f) state_ = 0; // temporary if-statement to test destruction
+	if (temp_ > 0.9f) state_ = 0; // simple if-statement to test destruction
 }
 
 void Bond::draw() {
@@ -61,5 +66,5 @@ void Bond::setTemp( cyclone::real t ) {
 }
 
 void Bond::setState( unsigned s ) {
-	if (s <= 1) state_ = s;
+	if (s == 1 || s == 0) state_ = s;
 }

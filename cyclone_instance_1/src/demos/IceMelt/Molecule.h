@@ -5,6 +5,7 @@
 
 class Molecule : public cyclone::Particle
 {
+	cyclone::real size_; // draw size of the molecule
 	cyclone::real temp_; // temperature of the molecule
 	unsigned state_;
 
@@ -23,11 +24,13 @@ public:
 
 	// Accessors:
 
+	const cyclone::real getSize() const;
 	const cyclone::real getTemp() const;
 	const unsigned getState() const;
 
 	// Muatators:
 
+	void setSize( cyclone::real s );
 	void setTemp( cyclone::real t );
 	void setState( unsigned s );
 };

@@ -29,7 +29,8 @@ Molecule& Molecule::operator=( Molecule& source ) {
 }
 
 void Molecule::update( cyclone::real duration ) {
-	temp_ += duration / (rand() % 50 + 1); // temporary hack for testing color
+	if (getPosition().y < 0.1f) temp_ += duration / (rand() % 50 + 25);
+
 	if (temp_ >= 1) state_ = 1;
 }
 
@@ -40,11 +41,15 @@ void Molecule::draw() {
 
     glPushMatrix();
     glTranslatef( pos.x, pos.y, pos.z );
-    glutSolidSphere( 0.1f, 20, 10 );
+    glutSolidSphere( size_, 20, 10 );
     glPopMatrix();
 }
 
 // Accessors:
+
+const cyclone::real Molecule::getSize() const {
+	return size_;
+}
 
 const cyclone::real Molecule::getTemp() const {
 	return temp_;
@@ -56,10 +61,14 @@ const unsigned Molecule::getState() const {
 
 // Mutators:
 
+void Molecule::setSize( cyclone::real s ) {
+	size_ = s;
+}
+
 void Molecule::setTemp( cyclone::real t ) {
 	if (t <= 1) temp_ = t;
 }
 
 void Molecule::setState( unsigned s ) {
-	if (s <= 1) state_ = s;
+	if (s == 1 || s == 0) state_ = s;
 }
