@@ -6,7 +6,7 @@
  *---																	---*
  *---	----	----	----	----	----	----	----	----	---*
  *---																	---*
- *---	Version 2.2								2011 November 22		---*
+ *---	Version 3.0								2011 November 23		---*
  *---																	---*
  *---	Joel Kuczmarski			Dan Wojo		Derek Hearn				---*
  *---																	---*
