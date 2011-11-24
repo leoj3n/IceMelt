@@ -29,7 +29,7 @@ Molecule& Molecule::operator=( Molecule& source ) {
 }
 
 void Molecule::update( cyclone::real duration ) {
-	if (getPosition().y < 0.1f) temp_ += duration / (rand() % 50 + 25);
+	if (getPosition().y < 0.1f) temp_ += duration / (rand() % 30 + 15);
 
 	if (temp_ >= 1) state_ = 1;
 }

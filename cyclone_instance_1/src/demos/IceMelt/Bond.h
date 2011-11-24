@@ -7,13 +7,14 @@
 
 class Bond : public cyclone::ParticleRod<Molecule>
 {
+	cyclone::real conductivity_; // conductivity of the bond
 	cyclone::real temp_; // temperature of the bond
 	unsigned state_; // if 0, the world should delete this and remove any references to it
 
 public:
 	// Constructors:
 
-	Bond() : temp_( 0 ), state_( 1 ) {} // default constructor
+	Bond() : conductivity_( 0.001f ), temp_( 0 ), state_( 1 ) {} // default constructor
 	Bond( const Bond& source ); // copy constructor
 	Bond& operator=( Bond& source ); // assignment operator
 	~Bond() {} // destructor
@@ -25,11 +26,13 @@ public:
 
 	// Accessors:
 
+	const cyclone::real getConductivity() const;
 	const cyclone::real getTemp() const;
 	const unsigned getState() const;
 
 	// Muatators:
 
+	void setConductivity( cyclone::real c );
 	void setTemp( cyclone::real t );
 	void setState( unsigned s );
 };

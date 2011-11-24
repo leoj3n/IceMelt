@@ -30,9 +30,9 @@ void Bond::update( cyclone::real duration ) {
 	temp_ = (particle[0]->getTemp() + particle[1]->getTemp()) / 2;
 
 	if (particle[1]->getPosition().y > particle[0]->getPosition().y) // particle[1] on top
-		particle[1]->setTemp( particle[1]->getTemp() + (temp_ * 0.005f) );
+		particle[1]->setTemp( particle[1]->getTemp() + (temp_ * conductivity_) );
 	else // particle[0] on top
-		particle[0]->setTemp( particle[0]->getTemp() + (temp_ * 0.005f) );
+		particle[0]->setTemp( particle[0]->getTemp() + (temp_ * conductivity_) );
 
 	// checks to see if this link should be destroyed
 	if (temp_ > 0.9f) state_ = 0; // simple if-statement to test destruction
@@ -51,6 +51,10 @@ void Bond::draw() {
 
 // Accessors:
 
+const cyclone::real Bond::getConductivity() const {
+	return conductivity_;
+}
+
 const cyclone::real Bond::getTemp() const {
 	return temp_;
 }
@@ -60,6 +64,10 @@ const unsigned Bond::getState() const {
 }
 
 // Mutators:
+
+void Bond::setConductivity( cyclone::real c ) {
+	conductivity_ = c;
+}
 
 void Bond::setTemp( cyclone::real t ) {
 	if (t <= 1) temp_ = t;

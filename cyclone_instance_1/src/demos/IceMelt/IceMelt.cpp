@@ -14,14 +14,26 @@
 
 #include "IceMelt.h" // includes all other .h files
 
+// recording and delta time
 #define RECORD_AT_START false
-#define FORCED_AT_START false
+#define FORCED_AT_START true
 #define FORCED_DURATION 0.016f
 
+// simulation properties
+#define ICE_DIST 0.2f // distance between molecules - don't go below 0.2f
+#define CUBE_DEPTH 4 // anything over 8 takes too long to render
+#define MOLECULE_DRAW_SCALE 1.4f // values of 0.5f thru 3.0f look best
+#define DRAW_BONDS false
+#define BOND_CONDUCTIVITY 0.001f // lower numbers = less conductivity, default: 0.001f
 #define BASE_MASS 1
-#define ICE_DIST 0.2f
+#define BASE_GRAVITY cyclone::Vector3( 0, -1.0f, 0 ) // cyclone::Vector3::GRAVITY is too strong for Euler
+
+// window properties
+#define WINDOW_WIDTH 640
+#define WINDOW_HEIGHT 385
+
+// static properties - don't change
 #define ICE_CROSS_DIST sqrt( 2.0f ) * ICE_DIST
-#define MOLECULE_DRAW_SIZE 0.08f
 
 // CONSTRUCTOR
 IceMelt::IceMelt( const unsigned depth ) 
@@ -57,12 +69,12 @@ world_( (depth * depth * depth) * 10 ) {
 	for( unsigned i = 0; i < cubeDepth_; i++ ) {
 		for( unsigned j = 0; j < cubeDepth_; j++ ) {
 			for( unsigned k = 0; k < cubeDepth_; k++ ) {
-				molecules_[count].setSize( MOLECULE_DRAW_SIZE );
+				molecules_[count].setSize( MOLECULE_DRAW_SCALE * cubeDepth_ * ICE_DIST * 0.08f );
 				molecules_[count].setPosition( ICE_DIST * k, ICE_DIST * i, ICE_DIST * j );
 				molecules_[count].setMass( BASE_MASS );
 				molecules_[count].setVelocity( 0, 0, 0 );
 				molecules_[count].setDamping( 0.9f );
-				molecules_[count].setAcceleration( cyclone::Vector3( 0, -1.0f, 0 ) ); //cyclone::Vector3::GRAVITY
+				molecules_[count].setAcceleration( BASE_GRAVITY );
 				molecules_[count++].clearAccumulator();
 			}
 		}
@@ -148,8 +160,9 @@ world_( (depth * depth * depth) * 10 ) {
 	}
 
 	for( unsigned i = 0; i < bondCount_; i++ ) {
+		bonds_[i].setConductivity( BOND_CONDUCTIVITY ); // set all bonds to have the same conductivity
 		bondsOrig_[i] = bonds_[i]; // store original state
-		// below: pushes back a Bond which is a ParticleRod which is a ParticleLink which is a ParticleContactGenerator
+		// below: pushes back a Bond (which is a ParticleRod which is a ParticleLink which is a ParticleContactGenerator)
         world_.getContactGenerators().push_back( &bonds_[i] );
     }
 
@@ -166,7 +179,7 @@ IceMelt::~IceMelt() {
 
 // graphics initialization
 void IceMelt::initGraphics() {
-	glutReshapeWindow( 600, 800 ); // window size
+	glutReshapeWindow( WINDOW_WIDTH, WINDOW_HEIGHT ); // window size
 	glutPositionWindow( 20, 20 ); // window position
 	
 	glClearColor(0.9f, 0.95f, 1.0f, 1.0f);
@@ -223,19 +236,21 @@ void IceMelt::display() {
 	// Clear the view port and set the camera direction
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
     glLoadIdentity();
-    gluLookAt( 5.0, 2.0, 8.0,  0.5, 2.0, 0.0,  0.0, 1.0, 0.0 );
+	float zoom = cubeDepth_ * ICE_DIST * 1.60f;
+    gluLookAt( zoom, (zoom * 0.75f), zoom,  0.0, ICE_DIST, 0.0,  0.0, 1.0, 0.0 );
 
 	// draw the molecules
 	for (unsigned i = 0; i < moleculeCount_; i++)
 		if (molecules_[i].getState()) molecules_[i].draw();
 
 	// draw the bonds
-	for (unsigned i = 0; i < bondCount_; i++)
-		if (bonds_[i].getState()) bonds_[i].draw();
+	if (DRAW_BONDS)
+		for (unsigned i = 0; i < bondCount_; i++)
+			if (bonds_[i].getState()) bonds_[i].draw();
 
 	// this HUD will be captured in screenshots
 	char hud_top[50];
-	sprintf_s( hud_top, "Delta Time:  %f [%s]", duration_, (zeroFlag_ ? "FORCED" : "NORMAL") );
+	sprintf_s( hud_top, "Delta Time:  %f [%s] Frame: %d", duration_, (zeroFlag_ ? "FORCED" : "NORMAL"), (int)TimingData::get().frameNumber );
 	glColor3f( 0, 0, 0 );
 	renderText( 10.0f, (height - 20.0f), hud_top );
 
@@ -251,7 +266,12 @@ void IceMelt::display() {
 
 		// this HUD won't be captured in screenshots
 		char hud_bot[MAX_PATH + 50];
-		sprintf_s( hud_bot, "File:  %s", file_ );
+		sprintf_s( hud_bot, "File:  %s\nPress 2 to stop recording.", file_ );
+		glColor3f( 0, 0, 1.0f );
+		renderText( 10.0f, 20.0f, hud_bot );
+	} else {
+		char hud_bot[50];
+		sprintf_s( hud_bot, "Press 2 to begin recording..." );
 		glColor3f( 0, 0, 1.0f );
 		renderText( 10.0f, 20.0f, hud_bot );
 	}
@@ -265,7 +285,7 @@ void IceMelt::key( unsigned char key ) {
 				Molecule &m = molecules_[i];
 
 				if (spaceFlag_)
-					m.setAcceleration( cyclone::Vector3::GRAVITY );
+					m.setAcceleration( BASE_GRAVITY );
 				else
 					m.setAcceleration( cyclone::Vector3( 0, (i % 2), 0 ) ); // mod causes a small amount of tilt
 			}
@@ -322,5 +342,5 @@ const char* IceMelt::getTitle() {
 
 // create an application object
 Application* getApplication() {
-	return new IceMelt( 6 ); // depth gets passed as an unsigned int
+	return new IceMelt( CUBE_DEPTH ); // depth gets passed as an unsigned int
 }

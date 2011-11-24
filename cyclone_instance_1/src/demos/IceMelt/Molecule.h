@@ -12,7 +12,7 @@ class Molecule : public cyclone::Particle
 public:
 	// Constructors:
 
-	Molecule() : temp_( 0 ), state_( 1 ) {} // default constructor
+	Molecule() : size_( 0.09f ), temp_( 0 ), state_( 1 ) {} // default constructor
 	Molecule( const Molecule& source ); // copy constructor
 	Molecule& operator=( Molecule& source ); // assignment operator
 	~Molecule() {} // destructor
